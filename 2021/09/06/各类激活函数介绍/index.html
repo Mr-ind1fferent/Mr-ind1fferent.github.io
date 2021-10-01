@@ -1,259 +1,394 @@
-
-
 <!DOCTYPE html>
-<html lang="en" data-default-color-scheme=auto>
-
-
-
+<html lang="zh-CN">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  <!-- cungudafa百度收录验证编号 -->
+  <!-- <meta name="baidu-site-verification" content="LukfTcyXmC" /> -->
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
-  <meta name="author" content="John Doe">
-  <meta name="keywords" content="">
-  <meta name="description" content="什么是激活函数？激活函数(Activation functions)对于神经网络模型去学习、理解复杂和非线性的函数具有十分重要的作用。将非线性特性引入到网络当中。 如下图的网络图  那到底网络是通过什么操作来的到最后一个节点的输出呢？没错，就是激活函数。 为什么要使用激活函数？ 激活函数对模型学习和理解有着重要的作用 激活函数提供非线性的因素。如果不使用，只是输出了一个简单的线性函数，复杂度十分有">
-<meta property="og:type" content="article">
-<meta property="og:title" content="各类激活函数介绍">
-<meta property="og:url" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/index.html">
-<meta property="og:site_name" content="想饮一些酒，让灵魂失重，好被风吹走。">
-<meta property="og:description" content="什么是激活函数？激活函数(Activation functions)对于神经网络模型去学习、理解复杂和非线性的函数具有十分重要的作用。将非线性特性引入到网络当中。 如下图的网络图  那到底网络是通过什么操作来的到最后一个节点的输出呢？没错，就是激活函数。 为什么要使用激活函数？ 激活函数对模型学习和理解有着重要的作用 激活函数提供非线性的因素。如果不使用，只是输出了一个简单的线性函数，复杂度十分有">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img1.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img2.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img3.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img4.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img5.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img6.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img7.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img8.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img9.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img10.png">
-<meta property="og:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img11.png">
-<meta property="article:published_time" content="2021-09-06T13:12:14.000Z">
-<meta property="article:modified_time" content="2021-09-08T05:18:23.778Z">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img1.png">
+  <title itemprop="name">各类激活函数介绍 | 想饮一些酒，让灵魂失重，好被风吹走。</title>
   
-  <title>各类激活函数介绍 - 想饮一些酒，让灵魂失重，好被风吹走。</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cungudafa/cdn/css/style.css" type="text/css" media="all" id="saukra_css-css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cungudafa/cdn/css/jquery.fancybox.min.css" media="all">  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cungudafa/cdn/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cungudafa/cdn/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cungudafa/cdn/css/tags.css" media="all">
+  
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/cungudafa/cdn/css/logo.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/cungudafa/cdn/fonts/LOGO/logo.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <!-- 分析 -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+  <!-- Baidu Analytics -->
 
   
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
-    
-  
+  <!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+  " type="text/css" media="all"> -->
+  <script>
+    /*Initial Variables*/
+    var mashiro_option = new Object();
+    var mashiro_global = new Object();
+    mashiro_option.NProgressON = true;
+    /* 
+    * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+    * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+    */
+    mashiro_option.email_domain = "";
+    mashiro_option.email_name = "";
+    mashiro_option.cookie_version_control = "";
+    mashiro_option.qzone_autocomplete = false;
+    mashiro_option.site_name = "Mr.ind1fferentMr.ind1fferent";
+    mashiro_option.author_name = "Mr.ind1fferent";
+    mashiro_option.site_url = "https://www.mr-ind1fferent.xn--6qq986b3xl/";
+    mashiro_option.v_appId = "";//
+    mashiro_option.v_appKey = "";//
+    mashiro_option.mathjax = "1";
+    mashiro_option.copyright_enable = "false" ;
+    mashiro_option.copyright_minCharNumber = parseInt("120") ;
+    mashiro_option.copyright_description = "本文章著作权归作者所有，任何形式的转载都请注明出处。" ;
+    mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+    mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
 
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
-  
+    // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+    // mashiro_option.float_player_on = true;
 
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+    /*End of Initial Variables*/
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script type="text/javascript">
+    var bg = "https://cdn.jsdelivr.net/gh/cungudafa/cdn@2.0.9/img/cover/(0).jpg.webp,https://cdn.jsdelivr.net/gh/cungudafa/cdn@2.0.9/img/cover/(1).jpg.webp,https://cdn.jsdelivr.net/gh/cungudafa/cdn@2.0.9/img/cover/(2).jpg.webp,https://cdn.jsdelivr.net/gh/cungudafa/cdn@2.0.9/img/cover/(3).jpg.webp,https://cdn.jsdelivr.net/gh/cungudafa/cdn@2.0.9/img/cover/(4).jpg.webp,https://cdn.jsdelivr.net/gh/cungudafa/cdn@2.0.9/img/cover/(5).jpg.webp,https://cdn.jsdelivr.net/gh/cungudafa/cdn@2.0.9/img/cover/(6).jpg.webp,https://cdn.jsdelivr.net/gh/cungudafa/cdn@2.0.9/img/cover/(7).jpg.webp".split(",");
+    var bgindex = Math.floor(Math.random()*bg.length);
+    if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+      alert('朋友，IE浏览器未适配哦~');
+    }
+  </script>
 <meta name="generator" content="Hexo 5.4.0">
-<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="想饮一些酒，让灵魂失重，好被风吹走。" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><link rel="alternate" href="/atom.xml" title="想饮一些酒，让灵魂失重，好被风吹走。" type="application/atom+xml">
+</head> 
 
-
-<body>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Fluid</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                Home
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                Archives
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                Categories
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                Tags
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                About
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-            </a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Dynamic sliders -->
+  <div class="scrollbar" id="bar">
   </div>
-</nav>
-
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="各类激活函数介绍">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-06 21:12" pubdate>
-        September 6, 2021 pm
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      9.1k 字
-    </span>
-  
-
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      28 分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
+  <a href="#" class="cd-top faa-float animated"></a>
+  <!-- Main content -->
+  <section id="main-container">
+    <!-- Top menu -->
+    <div class="headertop filter-dot">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a target="_blank" rel="noopener" href="https://www.mr-ind1fferent.xn--6qq986b3xl/">
+          <img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN@1.2/images/zhongtang.png">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>离你最近的地方，路途最远；最简单的音调，需要最艰苦的练习。</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
           
+            
+              
+                <li>
+                  <a href="https://github.com/Mr-ind1fferent" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://blog.csdn.net/cungudafa" target="_blank" class="social-github" title="csdn">
+                    <img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN/img/social/csdn.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://www.zhihu.com/" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN/img/qrcode/wechat.png">
+                  </div>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
         </div>
       </div>
     </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">各类激活函数介绍</h1>
+  </figure>
+  
+  <div id="video-container">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <!-- banner -->
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+        <span class="site-title">
+            <span class="logolink logo">
+                <a href="/">
+                    <ruby>
+                    <span class="sakuraso">Hellow</span>
+                    <span class="no">DL</span>
+                    <span class="shironeko">World</span>
+                    <rp></rp>
+                    <rt class="logo">Mr.ind1fferent</rt>
+                    <rp></rp>
+                    </ruby>
+                  </a>
+            </span>
+          </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
             
-            <div class="markdown-body">
-              <h1 id="什么是激活函数？"><a href="#什么是激活函数？" class="headerlink" title="什么是激活函数？"></a>什么是激活函数？</h1><p>激活函数(Activation functions)对于神经网络模型去学习、理解复杂和非线性的函数具有十分重要的作用。将非线性特性引入到网络当中。</p>
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/analytics/">
+                          <i class="fa fa-line-chart" aria-hidden="true"></i>
+                          统计
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/tags">
+                          <i class="fa fa-tags" aria-hidden="true"></i>
+                          标签
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%8A%80%E6%9C%AF/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          技术
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E7%94%9F%E6%B4%BB/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          生活
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/artitalk/">
+                          <i class="fa fa-commenting-o fa-commenting" aria-hidden="true"></i>
+                          说说
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/photos/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          相册
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/books/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          悦读
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/movies/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          追剧
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/atom.xml">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+                    RSS
+                  </span>
+                </a>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      
+      <!-- body -->
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/cungudafa/cdn/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1"
+        class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content">  -->
+        <!--套嵌目录使用（主要为了支援评论）-->
+        
+        <div class="entry-content">
+          <h1 id="什么是激活函数？"><a href="#什么是激活函数？" class="headerlink" title="什么是激活函数？"></a>什么是激活函数？</h1><p>激活函数(Activation functions)对于神经网络模型去学习、理解复杂和非线性的函数具有十分重要的作用。将非线性特性引入到网络当中。</p>
 <p>如下图的网络图</p>
-<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img1.png" srcset="/img/loading.gif" lazyload alt="img1"></p>
+<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img1.png" alt="img1"></p>
 <p>那到底网络是通过什么操作来的到最后一个节点的输出呢？没错，就是<strong>激活函数。</strong></p>
 <h1 id="为什么要使用激活函数？"><a href="#为什么要使用激活函数？" class="headerlink" title="为什么要使用激活函数？"></a>为什么要使用激活函数？</h1><ol>
 <li>激活函数对模型学习和理解有着重要的作用</li>
@@ -264,41 +399,122 @@
 <li><h2 id="sigmoid激活函数"><a href="#sigmoid激活函数" class="headerlink" title="sigmoid激活函数"></a><strong>sigmoid激活函数</strong></h2><p>函数的定义方程如下图</p>
 <script type="math/tex; mode=display">
 f(x) = \frac{1}{1+e^{-x}}</script><p>值域为<code>(0,1)</code>。函数图像如下</p>
-<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img2.png" srcset="/img/loading.gif" lazyload alt="img2"></p>
+<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img2.png" alt="img2"></p>
 <p><strong>优点：</strong>它能够将输入的连续值变为0和1之间的输出，如果是非常大的负数，输出就是0；非常大的正数，输出就是1。</p>
 <p><strong>缺点：</strong>1.容易在反向传播时导致<a target="_blank" rel="noopener" href="https://blog.csdn.net/raojunyang/article/details/79962665?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-2-79962665.nonecase&amp;spm=1018.2226.3001.4187">梯度爆炸</a>和<a target="_blank" rel="noopener" href="https://blog.csdn.net/raojunyang/article/details/79962665?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-2-79962665.nonecase&amp;spm=1018.2226.3001.4187">梯度消失</a>（直接上超链接了以后有空写）。函数的导数如下图：</p>
-<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img3.png" srcset="/img/loading.gif" lazyload alt="img3"></p>
+<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img3.png" alt="img3"></p>
 <p>​            2.不是以0为对称轴</p>
 <p><strong>函数及其导数的代码参考实现如下：</strong></p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>] = [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">d_sigmoid</span>(<span class="hljs-params">x</span>):</span><br>    y = <span class="hljs-number">1</span> / (<span class="hljs-number">1</span> + np.exp(-x))<br>    dy = y * (<span class="hljs-number">1</span> - y)<br>    <span class="hljs-keyword">return</span> dy<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sigmoid</span>(<span class="hljs-params">x</span>):</span><br>    y = <span class="hljs-number">1</span> / (<span class="hljs-number">1</span> + np.exp(-x))<br>    <span class="hljs-keyword">return</span> y<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plot_sigmoid</span>():</span><br>    <span class="hljs-comment"># param:起点，终点，间距</span><br>    x = np.arange(-<span class="hljs-number">8</span>, <span class="hljs-number">8</span>, <span class="hljs-number">0.2</span>)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    plt.title(<span class="hljs-string">'sigmoid'</span>)  <span class="hljs-comment"># 第一幅图片标题</span><br>    y = sigmoid(x)<br>    plt.plot(x, y)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    y = d_sigmoid(x)<br>    plt.plot(x, y)<br>    plt.title(<span class="hljs-string"><code class="language-hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>] = [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">d_sigmoid</span>(<span class="hljs-params">x</span>):</span><br>    y = <span class="hljs-number">1</span> / (<span class="hljs-number">1</span> + np.exp(-x))<br>    dy = y * (<span class="hljs-number">1</span> - y)<br>    <span class="hljs-keyword">return</span> dy<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sigmoid</span>(<span class="hljs-params">x</span>):</span><br>    y = <span class="hljs-number">1</span> / (<span class="hljs-number">1</span> + np.exp(-x))<br>    <span class="hljs-keyword">return</span> y<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plot_sigmoid</span>():</span><br>    <span class="hljs-comment"># param:起点，终点，间距</span><br>    x = np.arange(-<span class="hljs-number">8</span>, <span class="hljs-number">8</span>, <span class="hljs-number">0.2</span>)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    plt.title(<span class="hljs-string">'sigmoid'</span>)  <span class="hljs-comment"># 第一幅图片标题</span><br>    y = sigmoid(x)<br>    plt.plot(x, y)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    y = d_sigmoid(x)<br>    plt.plot(x, y)<br>    plt.title(<span class="hljs-string">'sigmoid导数'</span>)<br>    plt.show()<br></code></pre></td></tr></tbody></table></figure>
+<p>```python<br>import numpy as np<br>import matplotlib.pyplot as plt</p>
+<h1 id="解决中文显示问题"><a href="#解决中文显示问题" class="headerlink" title="解决中文显示问题"></a>解决中文显示问题</h1><p>plt.rcParams[‘font.sans-serif’] = [‘SimHei’]<br>plt.rcParams[‘axes.unicode_minus’] = False</p>
 </li>
 </ul>
-<ul>
-<li><h2 id="tanh激活函数"><a href="#tanh激活函数" class="headerlink" title="tanh激活函数"></a><strong>tanh激活函数</strong></h2><p>函数的定义方程如下图：</p>
-<script type="math/tex; mode=display">
-tanh(x) = \frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}</script><p>值域为(-1,1)。函数图像如下：</p>
-<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img4.png" srcset="/img/loading.gif" lazyload alt="img4"></p>
-</li>
-</ul>
-<p>​        导数如下：</p>
-<p>​        <img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img5.png" srcset="/img/loading.gif" lazyload alt="img5"></p>
-<p>​        该函数解决了Sigmoid函数不是zero-centered输出问题，然后梯度消失问题和幂运算的问题仍然存在。</p>
-<p>​        <strong>优点：</strong></p>
-<p>​        1.解决了Sigmoid的输出不关于零点对称的问题</p>
-<p>​        2.也具有Sigmoid的平滑、容易求导的优点</p>
-<p>​        <strong>缺点：</strong></p>
-<p>​        1.运算量过大</p>
-<p>​        2.梯度消失没有解决</p>
-<p>​        <strong>函数及其导数的代码参考实现如下：</strong></p>
-<p>​                    </p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>] = [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tanh</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""tanh函数"""</span><br>    <span class="hljs-keyword">return</span> ((np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x)))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dx_tanh</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""tanh函数的导数"""</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> - tanh(x) * tanh(x)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.01</span>)<br>    fx = tanh(x)<br>    dx_fx = dx_tanh(x)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'tanh 函数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'fx'</span>)<br>    plt.plot(x, fx)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'tanh函数的导数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string"><code class="language-hljs python"><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>] = [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tanh</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""tanh函数"""</span><br>    <span class="hljs-keyword">return</span> ((np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x)))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dx_tanh</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""tanh函数的导数"""</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> - tanh(x) * tanh(x)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.01</span>)<br>    fx = tanh(x)<br>    dx_fx = dx_tanh(x)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'tanh 函数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'fx'</span>)<br>    plt.plot(x, fx)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'tanh函数的导数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'dx_fx'</span>)<br>    plt.plot(x, dx_fx)<br>    plt.show()<br></code></pre></td></tr></tbody></table></figure>
-<ul>
+<p>  def d_sigmoid(x):<br>      y = 1 / (1 + np.exp(-x))<br>      dy = y * (1 - y)<br>      return dy</p>
+<p>  def sigmoid(x):<br>      y = 1 / (1 + np.exp(-x))<br>      return y</p>
+<p>  def plot_sigmoid():</p>
+<pre><code>  # param:起点，终点，间距
+  x = np.arange(-8, 8, 0.2)
+  plt.subplot(1, 2, 1)
+  plt.title('sigmoid')  # 第一幅图片标题
+  y = sigmoid(x)
+  plt.plot(x, y)
+  plt.subplot(1, 2, 2)
+  y = d_sigmoid(x)
+  plt.plot(x, y)
+  plt.title('sigmoid导数')
+  plt.show()
+</code></pre><pre><code>
+
+
+- ## **tanh激活函数**
+
+  函数的定义方程如下图：
+  $$
+  tanh(x) = \frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
+  $$
+  值域为(-1,1)。函数图像如下：
+
+  ![img4](img4/img4.png)
+
+
+
+​        导数如下：
+
+​        ![img5](img5/img5.png)
+
+​        该函数解决了Sigmoid函数不是zero-centered输出问题，然后梯度消失问题和幂运算的问题仍然存在。
+
+​        **优点：**
+
+​        1.解决了Sigmoid的输出不关于零点对称的问题
+
+​        2.也具有Sigmoid的平滑、容易求导的优点
+
+​        **缺点：**
+
+​        1.运算量过大
+
+​        2.梯度消失没有解决
+
+​        **函数及其导数的代码参考实现如下：**
+
+​                    
+
+```python
+from matplotlib import pyplot as plt
+import numpy as np
+
+# 解决中文显示问题
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+
+def tanh(x):
+    """tanh函数"""
+    return ((np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x)))
+
+
+def dx_tanh(x):
+    """tanh函数的导数"""
+    return 1 - tanh(x) * tanh(x)
+
+
+if __name__ == '__main__':
+    x = np.arange(-10, 10, 0.01)
+    fx = tanh(x)
+    dx_fx = dx_tanh(x)
+    plt.subplot(1, 2, 1)
+    ax = plt.gca()  # 得到图像的Axes对象
+    ax.spines['right'].set_color('none')  # 将图像右边的轴设为透明
+    ax.spines['top'].set_color('none')  # 将图像上面的轴设为透明
+    ax.xaxis.set_ticks_position('bottom')  # 将x轴刻度设在下面的坐标轴上
+    ax.yaxis.set_ticks_position('left')  # 将y轴刻度设在左边的坐标轴上
+    ax.spines['bottom'].set_position(('data', 0))  # 将两个坐标轴的位置设在数据点原点
+    ax.spines['left'].set_position(('data', 0))
+    plt.title('tanh 函数')
+    plt.xlabel('x')
+    plt.ylabel('fx')
+    plt.plot(x, fx)
+    plt.subplot(1, 2, 2)
+    ax = plt.gca()  # 得到图像的Axes对象
+    ax.spines['right'].set_color('none')  # 将图像右边的轴设为透明
+    ax.spines['top'].set_color('none')  # 将图像上面的轴设为透明
+    ax.xaxis.set_ticks_position('bottom')  # 将x轴刻度设在下面的坐标轴上
+    ax.yaxis.set_ticks_position('left')  # 将y轴刻度设在左边的坐标轴上
+    ax.spines['bottom'].set_position(('data', 0))  # 将两个坐标轴的位置设在数据点原点
+    ax.spines['left'].set_position(('data', 0))
+    plt.title('tanh函数的导数')
+    plt.xlabel('x')
+    plt.ylabel('dx_fx')
+    plt.plot(x, dx_fx)
+    plt.show()
+</code></pre><ul>
 <li><h2 id="Relu激活函数"><a href="#Relu激活函数" class="headerlink" title="Relu激活函数"></a><strong>Relu激活函数</strong></h2><p>受到了step函数的生物学启发，当输入为正的时候，导数不为零，允许基于梯度的学习。在输入为负值的时候，学习速度会变得很慢。函数的定义为：</p>
 <script type="math/tex; mode=display">
 f(x) = max(0,x)</script><p>函数图像如下：</p>
-<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img6.png" srcset="/img/loading.gif" lazyload alt="img6"></p>
+<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img6.png" alt="img6"></p>
 <p>函数的导数如下：</p>
-<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img7.png" srcset="/img/loading.gif" lazyload alt="img7"></p>
+<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img7.png" alt="img7"></p>
 <p><strong>优点：</strong>1.相比于Sigmoid和tanh函数，ReLU在SGD中能够快速收敛，它具有线性、非饱和的形式</p>
 <p>​            2.有效缓解了梯度消失的问题</p>
 <p>​            3.SIgmoid和tanh设计了很多expensive的操作，ReLU可以更加简单的实现。</p>
@@ -308,29 +524,101 @@ f(x) = max(0,x)</script><p>函数图像如下：</p>
 <p>​            2.死亡ReLU（Dead ReLU Problem），某些神经元可能永远不会被激活，导致参数不会被更新。</p>
 <p>​            尽管存在这两个问题，ReLU仍然是最常用的激活函数，在搭建人工神经网络的时候推荐大家<strong>优先尝试！</strong></p>
 <p><strong>函数及导数代码如下：</strong></p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>] = [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">relu</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""relu函数"""</span><br>    <span class="hljs-comment"># temp = np.zeros_like(x)</span><br>    <span class="hljs-comment"># if_bigger_zero = (x &gt; temp)</span><br>    <span class="hljs-comment"># return x * if_bigger_zero</span><br>    <span class="hljs-keyword">return</span> np.where(x &lt; <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, x)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dx_relu</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""relu函数的导数"""</span><br>    <span class="hljs-comment"># temp = np.zeros_like(x)</span><br>    <span class="hljs-comment"># if_bigger_equal_zero = (x &gt;= temp)</span><br>    <span class="hljs-comment"># return if_bigger_equal_zero * np.ones_like(x)</span><br>    <span class="hljs-keyword">return</span> np.where(x &lt; <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)<br><br><br><span class="hljs-comment"># ---------------------------------------------</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.01</span>)<br>    fx = relu(x)<br>    dx_fx = dx_relu(x)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Relu函数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'fx'</span>)<br>    plt.plot(x, fx)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Relu函数的导数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string"><code class="language-hljs python"><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>] = [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">relu</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""relu函数"""</span><br>    <span class="hljs-comment"># temp = np.zeros_like(x)</span><br>    <span class="hljs-comment"># if_bigger_zero = (x &gt; temp)</span><br>    <span class="hljs-comment"># return x * if_bigger_zero</span><br>    <span class="hljs-keyword">return</span> np.where(x &lt; <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, x)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dx_relu</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""relu函数的导数"""</span><br>    <span class="hljs-comment"># temp = np.zeros_like(x)</span><br>    <span class="hljs-comment"># if_bigger_equal_zero = (x &gt;= temp)</span><br>    <span class="hljs-comment"># return if_bigger_equal_zero * np.ones_like(x)</span><br>    <span class="hljs-keyword">return</span> np.where(x &lt; <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)<br><br><br><span class="hljs-comment"># ---------------------------------------------</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.01</span>)<br>    fx = relu(x)<br>    dx_fx = dx_relu(x)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Relu函数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'fx'</span>)<br>    plt.plot(x, fx)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Relu函数的导数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'dx_fx'</span>)<br>    plt.plot(x, dx_fx)<br>    plt.show()<br><br></code></pre></td></tr></tbody></table></figure>
+<p>```python<br>from matplotlib import pyplot as plt<br>import numpy as np</p>
+<h1 id="解决中文显示问题-1"><a href="#解决中文显示问题-1" class="headerlink" title="解决中文显示问题"></a>解决中文显示问题</h1><p>plt.rcParams[‘font.sans-serif’] = [‘SimHei’]<br>plt.rcParams[‘axes.unicode_minus’] = False</p>
 </li>
 </ul>
-<ul>
-<li><h2 id="Leaky-ReLU函数（PReLU）"><a href="#Leaky-ReLU函数（PReLU）" class="headerlink" title="Leaky ReLU函数（PReLU）"></a><strong>Leaky ReLU函数（PReLU）</strong></h2><p>函数的定义为</p>
-<script type="math/tex; mode=display">
-f(x) = max(ax,x)</script><p>函数的图像如下：</p>
-<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img8.png" srcset="/img/loading.gif" lazyload alt="img8"></p>
-</li>
-</ul>
-<p>​        函数的导数如下：</p>
-<p>​        <img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img9.png" srcset="/img/loading.gif" lazyload alt="img9"></p>
-<p>​        <strong>特点：</strong>与ReLU相比，Leak给所有负值赋予了一个非零斜率，leak是一个很小的常数，保留了一些负轴的值，使得负轴的信息不会全部丢失。</p>
-<p>​        <strong>函数及其导数代码如下：</strong></p>
-<p>​        </p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>]= [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">leaky_relu</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""leaky relu函数"""</span><br>    <span class="hljs-keyword">return</span> np.where(x &lt; <span class="hljs-number">0</span>, <span class="hljs-number">0.01</span> * x, x)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dx_leaky_relu</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""leaky relu函数的导数"""</span><br>    <span class="hljs-keyword">return</span> np.where(x &lt; <span class="hljs-number">0</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">1</span>)<br><br><br><span class="hljs-comment"># ---------------------------------------------</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.01</span>)<br>    fx = leaky_relu(x)<br>    dx_fx = dx_leaky_relu(x)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Leaky ReLu函数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'fx'</span>)<br>    plt.plot(x, fx)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Leaky Relu函数的导数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string"><code class="language-hljs python"><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>]= [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">leaky_relu</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""leaky relu函数"""</span><br>    <span class="hljs-keyword">return</span> np.where(x &lt; <span class="hljs-number">0</span>, <span class="hljs-number">0.01</span> * x, x)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dx_leaky_relu</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""leaky relu函数的导数"""</span><br>    <span class="hljs-keyword">return</span> np.where(x &lt; <span class="hljs-number">0</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">1</span>)<br><br><br><span class="hljs-comment"># ---------------------------------------------</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.01</span>)<br>    fx = leaky_relu(x)<br>    dx_fx = dx_leaky_relu(x)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Leaky ReLu函数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'fx'</span>)<br>    plt.plot(x, fx)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Leaky Relu函数的导数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'dx_fx'</span>)<br>    plt.plot(x, dx_fx)<br>    plt.show()<br><br></code></pre></td></tr></tbody></table></figure>
-<ul>
+<p>  def relu(x):<br>      “””relu函数”””</p>
+<pre><code>  # temp = np.zeros_like(x)
+  # if_bigger_zero = (x &gt; temp)
+  # return x * if_bigger_zero
+  return np.where(x &lt; 0, 0, x)
+</code></pre><p>  def dx_relu(x):<br>      “””relu函数的导数”””</p>
+<pre><code>  # temp = np.zeros_like(x)
+  # if_bigger_equal_zero = (x &gt;= temp)
+  # return if_bigger_equal_zero * np.ones_like(x)
+  return np.where(x &lt; 0, 0, 1)
+</code></pre><h1 id="——————————————————————"><a href="#——————————————————————" class="headerlink" title="——————————————————————-"></a>——————————————————————-</h1><p>  if <strong>name</strong> == ‘<strong>main</strong>‘:<br>      x = np.arange(-10, 10, 0.01)<br>      fx = relu(x)<br>      dx_fx = dx_relu(x)<br>      plt.subplot(1, 2, 1)<br>      ax = plt.gca()  # 得到图像的Axes对象<br>      ax.spines[‘right’].set_color(‘none’)  # 将图像右边的轴设为透明<br>      ax.spines[‘top’].set_color(‘none’)  # 将图像上面的轴设为透明<br>      ax.xaxis.set_ticks_position(‘bottom’)  # 将x轴刻度设在下面的坐标轴上<br>      ax.yaxis.set_ticks_position(‘left’)  # 将y轴刻度设在左边的坐标轴上<br>      ax.spines[‘bottom’].set_position((‘data’, 0))  # 将两个坐标轴的位置设在数据点原点<br>      ax.spines[‘left’].set_position((‘data’, 0))<br>      plt.title(‘Relu函数’)<br>      plt.xlabel(‘x’)<br>      plt.ylabel(‘fx’)<br>      plt.plot(x, fx)<br>      plt.subplot(1, 2, 2)<br>      ax = plt.gca()  # 得到图像的Axes对象<br>      ax.spines[‘right’].set_color(‘none’)  # 将图像右边的轴设为透明<br>      ax.spines[‘top’].set_color(‘none’)  # 将图像上面的轴设为透明<br>      ax.xaxis.set_ticks_position(‘bottom’)  # 将x轴刻度设在下面的坐标轴上<br>      ax.yaxis.set_ticks_position(‘left’)  # 将y轴刻度设在左边的坐标轴上<br>      ax.spines[‘bottom’].set_position((‘data’, 0))  # 将两个坐标轴的位置设在数据点原点<br>      ax.spines[‘left’].set_position((‘data’, 0))<br>      plt.title(‘Relu函数的导数’)<br>      plt.xlabel(‘x’)<br>      plt.ylabel(‘dx_fx’)<br>      plt.plot(x, dx_fx)<br>      plt.show()</p>
+<pre><code>
+
+
+- ## **Leaky ReLU函数（PReLU）**
+
+  函数的定义为
+  $$
+  f(x) = max(ax,x)
+  $$
+  函数的图像如下：
+
+  ![img8](img8/img8.png)
+
+​        函数的导数如下：
+
+​        ![img9](img9/img9.png)
+
+​        **特点：**与ReLU相比，Leak给所有负值赋予了一个非零斜率，leak是一个很小的常数，保留了一些负轴的值，使得负轴的信息不会全部丢失。
+
+​        **函数及其导数代码如下：**
+
+​        
+
+```python
+from matplotlib import pyplot as plt
+import numpy as np
+
+# 解决中文显示问题
+plt.rcParams['font.sans-serif']= ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+
+def leaky_relu(x):
+    """leaky relu函数"""
+    return np.where(x &lt; 0, 0.01 * x, x)
+
+
+def dx_leaky_relu(x):
+    """leaky relu函数的导数"""
+    return np.where(x &lt; 0, 0.01, 1)
+
+
+# ---------------------------------------------
+
+if __name__ == '__main__':
+    x = np.arange(-10, 10, 0.01)
+    fx = leaky_relu(x)
+    dx_fx = dx_leaky_relu(x)
+    plt.subplot(1, 2, 1)
+    ax = plt.gca()  # 得到图像的Axes对象
+    ax.spines['right'].set_color('none')  # 将图像右边的轴设为透明
+    ax.spines['top'].set_color('none')  # 将图像上面的轴设为透明
+    ax.xaxis.set_ticks_position('bottom')  # 将x轴刻度设在下面的坐标轴上
+    ax.yaxis.set_ticks_position('left')  # 将y轴刻度设在左边的坐标轴上
+    ax.spines['bottom'].set_position(('data', 0))  # 将两个坐标轴的位置设在数据点原点
+    ax.spines['left'].set_position(('data', 0))
+    plt.title('Leaky ReLu函数')
+    plt.xlabel('x')
+    plt.ylabel('fx')
+    plt.plot(x, fx)
+    plt.subplot(1, 2, 2)
+    ax = plt.gca()  # 得到图像的Axes对象
+    ax.spines['right'].set_color('none')  # 将图像右边的轴设为透明
+    ax.spines['top'].set_color('none')  # 将图像上面的轴设为透明
+    ax.xaxis.set_ticks_position('bottom')  # 将x轴刻度设在下面的坐标轴上
+    ax.yaxis.set_ticks_position('left')  # 将y轴刻度设在左边的坐标轴上
+    ax.spines['bottom'].set_position(('data', 0))  # 将两个坐标轴的位置设在数据点原点
+    ax.spines['left'].set_position(('data', 0))
+    plt.title('Leaky Relu函数的导数')
+    plt.xlabel('x')
+    plt.ylabel('dx_fx')
+    plt.plot(x, dx_fx)
+    plt.show()
+</code></pre><ul>
 <li><h2 id="Mish激活函数"><a href="#Mish激活函数" class="headerlink" title="Mish激活函数"></a><strong>Mish激活函数</strong></h2><p>函数定义如下</p>
 <script type="math/tex; mode=display">
 f(x) = x*tanh(ln(1+e^{x}))</script><p>函数图像如下：</p>
-<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img10.png" srcset="/img/loading.gif" lazyload alt="img10"></p>
+<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img10.png" alt="img10"></p>
 <p>函数的导数如下：</p>
-<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img11.png" srcset="/img/loading.gif" lazyload alt="img11"></p>
+<p><img src="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/img11.png" alt="img11"></p>
 <p><strong>函数特点：</strong></p>
 <p>1.无上界、有下界、平滑且非单调</p>
 <p><strong>优点：</strong></p>
@@ -340,204 +628,579 @@ f(x) = x*tanh(ln(1+e^{x}))</script><p>函数图像如下：</p>
 <p><strong>缺点：</strong></p>
 <p>1.引入了指数函数，增加了计算量</p>
 <p><strong>函数及其导数代码：</strong></p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>] = [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sech</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""sech函数"""</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> / (np.exp(x) + np.exp(-x))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sigmoid</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""sigmoid函数"""</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> / (<span class="hljs-number">1</span> + np.exp(-x))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">softplus</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""softplus函数"""</span><br>    <span class="hljs-keyword">return</span> np.log10(<span class="hljs-number">1</span> + np.exp(x))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tanh</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""tanh函数"""</span><br>    <span class="hljs-keyword">return</span> ((np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x)))<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.01</span>)<br>    fx = x * tanh(softplus(x))<br>    dx_fx = sech(softplus(x)) * sech(softplus(x)) * x * sigmoid(x) + fx / x<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Mish函数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'fx'</span>)<br>    plt.plot(x, fx)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Mish函数的导数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string"><code class="language-hljs python"><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 解决中文显示问题</span><br>plt.rcParams[<span class="hljs-string">'font.sans-serif'</span>] = [<span class="hljs-string">'SimHei'</span>]<br>plt.rcParams[<span class="hljs-string">'axes.unicode_minus'</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sech</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""sech函数"""</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> / (np.exp(x) + np.exp(-x))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sigmoid</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""sigmoid函数"""</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> / (<span class="hljs-number">1</span> + np.exp(-x))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">softplus</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""softplus函数"""</span><br>    <span class="hljs-keyword">return</span> np.log10(<span class="hljs-number">1</span> + np.exp(x))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tanh</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-string">"""tanh函数"""</span><br>    <span class="hljs-keyword">return</span> ((np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x)))<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.01</span>)<br>    fx = x * tanh(softplus(x))<br>    dx_fx = sech(softplus(x)) * sech(softplus(x)) * x * sigmoid(x) + fx / x<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Mish函数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'fx'</span>)<br>    plt.plot(x, fx)<br>    plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    ax = plt.gca()  <span class="hljs-comment"># 得到图像的Axes对象</span><br>    ax.spines[<span class="hljs-string">'right'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像右边的轴设为透明</span><br>    ax.spines[<span class="hljs-string">'top'</span>].set_color(<span class="hljs-string">'none'</span>)  <span class="hljs-comment"># 将图像上面的轴设为透明</span><br>    ax.xaxis.set_ticks_position(<span class="hljs-string">'bottom'</span>)  <span class="hljs-comment"># 将x轴刻度设在下面的坐标轴上</span><br>    ax.yaxis.set_ticks_position(<span class="hljs-string">'left'</span>)  <span class="hljs-comment"># 将y轴刻度设在左边的坐标轴上</span><br>    ax.spines[<span class="hljs-string">'bottom'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 将两个坐标轴的位置设在数据点原点</span><br>    ax.spines[<span class="hljs-string">'left'</span>].set_position((<span class="hljs-string">'data'</span>, <span class="hljs-number">0</span>))<br>    plt.title(<span class="hljs-string">'Mish函数的导数'</span>)<br>    plt.xlabel(<span class="hljs-string">'x'</span>)<br>    plt.ylabel(<span class="hljs-string">'dx_fx'</span>)<br>    plt.plot(x, dx_fx)<br>    plt.show()<br><br></code></pre></td></tr></tbody></table></figure>
+<p>```python<br>from matplotlib import pyplot as plt<br>import numpy as np</p>
+<h1 id="解决中文显示问题-2"><a href="#解决中文显示问题-2" class="headerlink" title="解决中文显示问题"></a>解决中文显示问题</h1><p>plt.rcParams[‘font.sans-serif’] = [‘SimHei’]<br>plt.rcParams[‘axes.unicode_minus’] = False</p>
 </li>
 </ul>
+<p>  def sech(x):<br>      “””sech函数”””<br>      return 2 / (np.exp(x) + np.exp(-x))</p>
+<p>  def sigmoid(x):<br>      “””sigmoid函数”””<br>      return 1 / (1 + np.exp(-x))</p>
+<p>  def softplus(x):<br>      “””softplus函数”””<br>      return np.log10(1 + np.exp(x))</p>
+<p>  def tanh(x):<br>      “””tanh函数”””<br>      return ((np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x)))</p>
+<p>  if <strong>name</strong> == ‘<strong>main</strong>‘:<br>      x = np.arange(-10, 10, 0.01)<br>      fx = x <em> tanh(softplus(x))<br>      dx_fx = sech(softplus(x)) </em> sech(softplus(x)) <em> x </em> sigmoid(x) + fx / x<br>      plt.subplot(1, 2, 1)<br>      ax = plt.gca()  # 得到图像的Axes对象<br>      ax.spines[‘right’].set_color(‘none’)  # 将图像右边的轴设为透明<br>      ax.spines[‘top’].set_color(‘none’)  # 将图像上面的轴设为透明<br>      ax.xaxis.set_ticks_position(‘bottom’)  # 将x轴刻度设在下面的坐标轴上<br>      ax.yaxis.set_ticks_position(‘left’)  # 将y轴刻度设在左边的坐标轴上<br>      ax.spines[‘bottom’].set_position((‘data’, 0))  # 将两个坐标轴的位置设在数据点原点<br>      ax.spines[‘left’].set_position((‘data’, 0))<br>      plt.title(‘Mish函数’)<br>      plt.xlabel(‘x’)<br>      plt.ylabel(‘fx’)<br>      plt.plot(x, fx)<br>      plt.subplot(1, 2, 2)<br>      ax = plt.gca()  # 得到图像的Axes对象<br>      ax.spines[‘right’].set_color(‘none’)  # 将图像右边的轴设为透明<br>      ax.spines[‘top’].set_color(‘none’)  # 将图像上面的轴设为透明<br>      ax.xaxis.set_ticks_position(‘bottom’)  # 将x轴刻度设在下面的坐标轴上<br>      ax.yaxis.set_ticks_position(‘left’)  # 将y轴刻度设在左边的坐标轴上<br>      ax.spines[‘bottom’].set_position((‘data’, 0))  # 将两个坐标轴的位置设在数据点原点<br>      ax.spines[‘left’].set_position((‘data’, 0))<br>      plt.title(‘Mish函数的导数’)<br>      plt.xlabel(‘x’)<br>      plt.ylabel(‘dx_fx’)<br>      plt.plot(x, dx_fx)<br>      plt.show()</p>
+<p>  ```</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>​        在深度学习的发展中，出现了许多的激活函数，那么我们改如何选择激活函数呢？</p>
 <p>​        1.由于需要花费大量时间来处理大量数据，收敛的速度尤其重要。所以尽量要使用zero-centered数据和zero-centered输出，加快收敛速度。</p>
 <p>​        2.如果使用了ReLU，一定要注意学习率的设置，或者你可以尝试Leaky ReLU或者PReLU等等</p>
 <p>​        3.sigmoid做为远古的激活函数，已经很少被使用！</p>
 <p>​            （忘了softmax，如果我还记得的话会补上</p>
 
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                
-              </div>
-              
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/09/12/Introduction/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Introduction</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/09/06/MGN-net/">
-                        <span class="hidden-mobile">MGN_net</span>
-                        <span class="visible-mobile">Next</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
+        </div>
 
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN/img/custom/donate/AliPay.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN/img/custom/donate/WeChatPay.png"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent">
+        </div>
+        <!-- 评分 -->
+        <div class="single-reward">
+          
+          <!-- 五星评分 -->
+<div id="wpac-rating"></div>
+<script type="text/javascript">
+wpac_init = window.wpac_init || [];
+wpac_init.push({widget: 'Rating', id: 23889});
+(function() {
+    if ('WIDGETPACK_LOADED' in window) return;
+    WIDGETPACK_LOADED = true;
+    var mc = document.createElement('script');
+    mc.type = 'text/javascript';
+    mc.async = true;
+    mc.src = 'https://embed.widgetpack.com/widget.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+})();
+</script>
+<!-- <a target="_blank" rel="noopener" href="https://widgetpack.com" class="wpac-cr">Star Rating WIDGET PACK</a> -->
+          
+        </div>
+        <!-- 自定义署名方式 -->
+        <footer class="post-footer">
+          <div class="post-lincenses" style="color: #ff9966;">
+            欢迎转载，转载时请注明来源哦！
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" style="color: #ff9966;" target="_blank"
+              rel="nofollow">
+              <i class="fa fa-creative-commons" aria-hidden="true"></i>ncsa4.0</a>
+          </div>
+          
+          <div class="post-tags" style="color: #a39391">
+            <span><i class="fa fa-tags"></i>
+              
+            </span>
+            <span>
+              <i class="iconfont icon-file"></i>
+              
+            </span>
+          </div>
+          
+          <div class="post-share" >
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+        <!-- <div class="tag-cloud">
+          <div class="tag-cloud-title">
+          </div>
+          <div class="tag-cloud-tags">
             
-          </article>
-        </div>
-      </div>
+          </div>
+        </div> -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+        
+        <div class="post-nepre half previous">
+          
+            <a href="/2021/09/12/Introduction/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/img/loader/orange.progress-bar-stripe-loader.svg" data-src=""
+                  style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)"
+                  src="">
+              </div>
+              <span class="label">Previous Post</span>
+              <div class="info">
+                <h3>Introduction</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+          
+          
+          
+          <div class="post-nepre half next">
+            
+              <a href="/2021/09/06/MGN-net/" rel="next">
+                <div class="background">
+                  <img class="lazyload" src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/img/loader/orange.progress-bar-stripe-loader.svg" data-src=""
+                    style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                    onerror="imgError(this,3)" src="">
+                </div>
+                <span class="label">Next Post</span>
+                <div class="info">
+                  <h3>MGN_net</h3>
+                  <hr>
+                </div>
+              </a>
+            </div>
+            
+      </section>
+      <!-- 加密文章隐藏评论 -->
+      <section class="comment" >
+        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<div id="gitalk-container" class="comment"></div> 
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="/js/md5.min.js"></script>
+<script type="text/javascript">
+	var gitalk = new Gitalk({
+  	clientID: '',
+  	clientSecret: '',
+  	repo: 'cungudafa.github.io',
+  	owner: 'Mr-ind1fferent',
+	admin: ['Mr-ind1fferent'],
+	distractionFreeMode: 'true',
+    id: md5(location.pathname)
+})
+gitalk.render('gitalk-container') 
+</script>
+
+      </section>
+      <!-- 加密文章隐藏作者信息 -->
+      
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+
+<!--评论配置-->
+
+
+
+      <!-- body.end -->
     </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+    <!-- search -->    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
     </div>
-  </div>
 </div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            // PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- footer-->    
     
-
-    
-  </main>
-
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
-  
-
-  
-
-  
+    <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="site-info">
+        <div class="footertext">
+          <div class="img-preload">
+              <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+              <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+          </div>
+        </div>
+        <!-- 网站数据统计 -->
+        <div class="footer-device">
+          <p style="font-family: 'Ubuntu', sans-serif;">
+            <span style="color: #ff9999;padding-left: 20px;">
+                <!-- 网站运行时间统计 -->
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                <span id="time" align="center">载入时间中...</span>
+                <script>
+                var now = new Date(); 
+                function createtime() { 
+                      var grt= new Date("Mon Aug 23 2021 13:20:00 GMT+0800 (中国标准时间)");//在此处修改你的建站时间
+                      now.setTime(now.getTime()+250); 
+                      days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+                      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+                      if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+                      mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+                      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+                      snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+                      document.getElementById("time").innerHTML = "小破站在各种灾难中苟活了 "+ dnum +" 天 "+hnum + " 小时 " + mnum + " 分 " + snum + " 秒";      
+                  } 
+                  setInterval("createtime()",250);
+                </script>
+            </span> 
+          </p>
+        </div>
+        <div class="footer-device">
+          <p style="font-family: 'Ubuntu', sans-serif;">
+            <span style="color: #b9b9b9;padding-left: 20px;">
+              <!-- 全网站字数统计wordcount -->
+              
+              <!-- 不蒜子网页计数器 -->
+              
+              <span style="padding-left: 20px;"><i class="fa fa-fire" aria-hidden="true" style="color: #ff9999;display:inline-block"></i><span id="busuanzi_container_site_pv">总访问量： <span id="busuanzi_value_site_pv" style="color:#ff9999;"></span>次</span>
+              </span>
+              
+              
+              <span style="padding-left: 20px;"><i class="fa fa-user" aria-hidden="true" style="color: #ff9999;display:inline-block"></i><span id="busuanzi_container_site_uv">总访问人数： <span id="busuanzi_value_site_uv" style="color:#ff9999;"></span>人</span>
+              </span>
+              
+            </span>
+          </p>
+        </div>
+        <!-- 作者注明 -->
+        <div class="footer-device">
+          <p style="font-family: 'Ubuntu', sans-serif;">
+              <span style="color: #b9b9b9;">
+                Copyright &copy; 2021
+                &nbsp;<a style="color: #ff9999;display:inline-block"> John Doe </a>
+                &nbsp;<i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> 
+                &nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank" style="color: #ff9999;display:inline-block">Hexo</a>
+                |&nbsp;Theme&nbsp;<a href="https://gitee.com/cungudafa/hexo-theme-sakuraplus" target="_blank" style="color: #ff9999;display:inline-block">SakuraPlus</a>
+              </span>
+          </p>
+        </div>
+         <!-- 网站作者版权注明 -->
+         
+          <div id="footer-info" class="inner">
+            <p style="font-family: 'Ubuntu', sans-serif;">
+              <span style="color: #ff9999;">
+                
+              </span>
+            </p>
+          </div>
+        
+    </div><!-- .site-info -->
 </footer>
 
 
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/js/InsightSearch.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/js/sakura-app.js"></script>
 
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- fancybox大图查看 需jq -->
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/js/jquery.fancybox.min.js"></script>
   <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
+    $('[data-fancybox="images"]').fancybox({
+      thumbs : {
+        autoStart : true //缩略图
+      }
+    });
+    $('[data-fancybox]').fancybox({
+      protect: true,//图片右键不能下载
+      youtube : {
+          controls : 0,
+          showinfo : 0
+      },
+      vimeo : {
+          color : 'f00'
+      }
+    });
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-<!-- Plugins -->
-
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
+<!-- 自适应浏览器 -->
+<script type="text/javascript">
+  /* <![CDATA[ */
+  if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    var Poi = {"pjax":"0","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+  } else {
+    var Poi = {"pjax":"0","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+  }
+  /* ]]> */
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  
-    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
-  
-  
-    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
-  
-
-
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
   </script>
+  <script>
+  $(document).ready(function() {
+    if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+      if ($(".pattern-center").length > 0) { //有图的情况
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '.toc', // 放置目录的容器
+            // Where to grab the headings to build the table of contents.
+            contentSelector: '.entry-content', // 正文内容所在
+            // Which headings to grab inside of the contentSelector element.
+            scrollSmooth: true,
+            headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+            headingsOffset: -400,
+            scrollSmoothOffset: -85
+        });
+      } else {
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '.toc', // 放置目录的容器
+            // Where to grab the headings to build the table of contents.
+            contentSelector: '.entry-content', // 正文内容所在
+            // Which headings to grab inside of the contentSelector element.
+            scrollSmooth: true,
+            headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+            headingsOffset: -85,
+            scrollSmoothOffset: -85
+        });
+      }
+      var offsetTop = $('.toc').offset().top - 95;
+      window.onscroll = function() {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop >= offsetTop) {
+          $('.toc').addClass('toc-fixed');
+        } else {
+          $('.toc').removeClass('toc-fixed');
+        }
+      }
+    }
+  });
+  </script>
+    <!-- Side menu -->
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <!-- Floating window -->
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDNhttps://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN@1.2/images/zhongtang.png">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">Mr.ind1fferentMr.ind1fferent</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="https://github.com/Mr-ind1fferent" class="fa fa-github" target="_blank" style="color: #333; margin-left: 20px"></a>
+      
+        <a href="http://weibo.com/3829198906/info" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left: 20px"></a>
+      
+        <a href="https://blog.csdn.net/cungudafa" class="fa fa-star" target="_blank" style="color: #ff9900; margin-left: 20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/analytics/">
+                  <i class="fa fa-line-chart" aria-hidden="true"></i>
+                  统计
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags">
+                  <i class="fa fa-tags" aria-hidden="true"></i>
+                  标签
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%8A%80%E6%9C%AF/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  技术
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E7%94%9F%E6%B4%BB/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  生活
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/artitalk/">
+                  <i class="fa fa-commenting-o fa-commenting" aria-hidden="true"></i>
+                  说说
+                </a>
+              </li>
+            
+              <li>
+                <a href="/photos/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  相册
+                </a>
+              </li>
+            
+              <li>
+                <a href="/books/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  悦读
+                </a>
+              </li>
+            
+              <li>
+                <a href="/movies/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  追剧
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/atom.xml">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+            RSS
+          </span>
+        </a>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2020 hexo-sakuraplus</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  
+   <!-- pages壁纸切换 -->
+ 
+    <div class="skin-menu no-select" id="mainskin"  style="position: fixed">
+        <div class="theme-controls row-container">
+            <ul class="menu-list">
+                <li id="white-bg"> <i class="fa fa-television" aria-hidden="true"></i></li>
+                <li id="sakura-bg"> <i class="iconfont icon-sakura"></i></li>
+                <li id="gribs-bg"> <i class="fa fa-slack" aria-hidden="true"></i></li>
+                <li id="KAdots-bg"> <i class="iconfont icon-dots"></i></li>
+                <li id="totem-bg"> <i class="fa fa-optin-monster" aria-hidden="true"></i></li>
+                <li id="pixiv-bg"> <i class="iconfont icon-pixiv"></i></li>
+                <li id="bing-bg"> <i class="iconfont icon-bing"></i></li>
+                <li id="dark-bg"> <i class="fa fa-moon-o" aria-hidden="true"></i></li>
+            </ul>
+        </div>
+        <div class="font-family-controls row-container">
+            <button type="button" class="control-btn-serif selected" data-mode="serif" onclick="mashiro_global.font_control.change_font()">Serif</button>
+            <button type="button" class="control-btn-sans-serif" data-mode="sans-serif" onclick="mashiro_global.font_control.change_font()">Sans Serif</button>
+        </div>
+    </div>   
+    <canvas id="night-mode-cover"></canvas> 
+        <div class="changeSkin-gear no-select">
+        <div class="keys" id="setbtn"> <span id="open-skinMenu"> 切换壁纸 | SCHEME TOOL 
+            &nbsp;<i class="iconfont icon-gear inline-block rotating"></i> </span></div>
+    </div><!-- skin.end -->
 
+  <!-- left side bar --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-
-</body>
+ </body>
 </html>
