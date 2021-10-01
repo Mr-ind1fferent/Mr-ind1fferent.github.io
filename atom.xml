@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>想饮一些酒，让灵魂失重，好被风吹走。</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-09-24T11:27:53.194Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Light-weight</title>
+    <link href="http://example.com/2021/09/23/Light-weight/"/>
+    <id>http://example.com/2021/09/23/Light-weight/</id>
+    <published>2021-09-23T06:20:13.000Z</published>
+    <updated>2021-09-24T11:27:53.194Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;About-Light-Weight&quot;&gt;&lt;a href=&quot;#About-Light-Weight&quot; class=&quot;headerlink&quot; title=&quot;About Light-Weight&quot;&gt;&lt;/a&gt;About</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>FCOS</title>
+    <link href="http://example.com/2021/09/16/FCOS/"/>
+    <id>http://example.com/2021/09/16/FCOS/</id>
+    <published>2021-09-16T04:40:23.000Z</published>
+    <updated>2021-09-17T06:28:27.844Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;FCOS-Fully-Convolutional-One-Stage-Object-Detection&quot;&gt;&lt;a href=&quot;#FCOS-Fully-Convolutional-One-Stage-Object-Detection&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Introduction</title>
+    <link href="http://example.com/2021/09/12/Introduction/"/>
+    <id>http://example.com/2021/09/12/Introduction/</id>
+    <published>2021-09-12T07:45:51.000Z</published>
+    <updated>2021-09-12T11:21:56.826Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Welcome to my blog！欢迎来到我的博客，在浏览我的博客之前，希望你可以先看一下一些introduction以便你更好得了解我。&lt;/p&gt;
+&lt;h1 id=&quot;关于我的博客&quot;&gt;&lt;a href=&quot;#关于我的博客&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>各类激活函数介绍</title>
+    <link href="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/</id>
+    <published>2021-09-06T13:12:14.000Z</published>
+    <updated>2021-09-08T05:18:23.778Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;什么是激活函数？&quot;&gt;&lt;a href=&quot;#什么是激活函数？&quot; class=&quot;headerlink&quot; title=&quot;什么是激活函数？&quot;&gt;&lt;/a&gt;什么是激活函数？&lt;/h1&gt;&lt;p&gt;激活函数(Activation</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MGN_net</title>
+    <link href="http://example.com/2021/09/06/MGN-net/"/>
+    <id>http://example.com/2021/09/06/MGN-net/</id>
+    <published>2021-09-06T04:34:02.000Z</published>
+    <updated>2021-09-24T14:19:01.495Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Learning-Discriminative-Features-with-Multiple-Granularities-for-Person-Re-Identification&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://example.com/2021/08/23/ReID_MGN_Paddlepaddle/"/>
+    <id>http://example.com/2021/08/23/ReID_MGN_Paddlepaddle/</id>
+    <published>2021-08-23T11:04:48.792Z</published>
+    <updated>2021-09-01T08:22:20.639Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Re-ID-MGN-Paddlepaddle&quot;&gt;&lt;a href=&quot;#Re-ID-MGN-Paddlepaddle&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <meta name="description" content="Learning Discriminative Features with Multiple Granularities for Person Re-Identification这是一篇关于行人重识别的笔记，学习了云从科技的MGN网络。原论文：Learning Discriminative Features with Multiple Granularities for Person Re-Ide">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MGN_net">
+<meta property="og:url" content="http://example.com/2021/09/06/MGN-net/index.html">
+<meta property="og:site_name" content="想饮一些酒，让灵魂失重，好被风吹走。">
+<meta property="og:description" content="Learning Discriminative Features with Multiple Granularities for Person Re-Identification这是一篇关于行人重识别的笔记，学习了云从科技的MGN网络。原论文：Learning Discriminative Features with Multiple Granularities for Person Re-Ide">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/09/06/MGN-net/img1.png">
+<meta property="og:image" content="http://example.com/2021/09/06/MGN-net/img2.png">
+<meta property="og:image" content="http://example.com/2021/09/06/MGN-net/img4.png">
+<meta property="og:image" content="http://example.com/2021/09/06/MGN-net/img3.png">
+<meta property="article:published_time" content="2021-09-06T04:34:02.000Z">
+<meta property="article:modified_time" content="2021-09-24T14:19:01.495Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2021/09/06/MGN-net/img1.png">
+  
+  <title>MGN_net - 想饮一些酒，让灵魂失重，好被风吹走。</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="想饮一些酒，让灵魂失重，好被风吹走。" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="MGN_net">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-06 12:34" pubdate>
+        September 6, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MGN_net</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Learning-Discriminative-Features-with-Multiple-Granularities-for-Person-Re-Identification"><a href="#Learning-Discriminative-Features-with-Multiple-Granularities-for-Person-Re-Identification" class="headerlink" title="Learning Discriminative Features with Multiple Granularities for Person Re-Identification"></a>Learning Discriminative Features with Multiple Granularities for Person Re-Identification</h1><p>这是一篇关于行人重识别的笔记，学习了云从科技的MGN网络。原论文：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1804.01438.pdf">Learning Discriminative Features with Multiple Granularities for Person Re-Identification</a></p>
+<h2 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a><strong>摘要：</strong></h2><p>The combination of global and partial features has been an essential solution to improve discriminative performances in person re-identification(Re-ID)tasks. Previous part-based methods mainly focus on locating regions with specific pre-defined semantics to learn local representations, which increases learning difficulty but not efficient or robust to scenarios with large variances In this paper, we propose an end-to-end feature learning strategy integrating discriminative information with various granularities We carefully design the Multiple Granularity Network(MGN),a multi-branch deep network architecture consisting of one branch for global feature representations and two branches for local feaure representations. Instead of learning on semantic regions, we uniformly partition the images into several stripes, and vary the number of parts in different local branches to obtain local feature representations with multiple granularities. Comprehensive experiments implemented on the mainstream evaluation datasets including Market-1501, Duke MTMC-reid and CUHKO3 indicate that our method robustly achieves state-of-the -art performances and outperforms any existing approaches by a large margin For example, on Market-1501 dataset in single query mode, we obtain a top result of Rank-1/mAP=96.6%/94.2% with this method after re-ranking。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文提出了一种网络结构，将全局特征跟多粒度局部特征结合在一起，全局特征负责整体的宏观上大家共有的特征的提取，然后把图像切分成不同块，每一块不同粒度，负责不同层次或者不同级别特征的提取。在观察中发现，确实随着分割力度的增加，模型能够学到更详细的细节，最终产生MGN的网络结构。</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><ul>
+<li>表征学习：通过设计分类损失与对比损失，实现对网络的监督学习。</li>
+<li>度量学习：基于TripletLoss三元损失的ReID方案。</li>
+<li>局部特征学习：基于局部区域调整的ReID解决方案。</li>
+</ul>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><ul>
+<li><p><strong>多粒度特征</strong>：上图第一列有3张图，中间一列把3张图二分之一上下均分，第三列是把人从上到下分成三块——头部、腹部、腿部，它有3个粒度，每个粒度做独立的引导，使得模型尽量对每个粒度学习更多信息。</p>
+<p>下图表示的是注意力的呈现效果，这不是基于本模型产生的，是基于之前的算法看到的。上面的图是整张图在输入时网络在关注什么，整个人看着比较均匀，范围更广。第三栏从上到下相当于切成3块，每一块看的时候它的关注点会更加集中一点，亮度分布不会像上图那么均匀，更关注局部的亮点，可以理解为网络在关注不同粒度的信息。</p>
+<p><img src="/2021/09/06/MGN-net/img1.png" srcset="/img/loading.gif" lazyload alt="img1"></p>
+<p><img src="/2021/09/06/MGN-net/img2.png" srcset="/img/loading.gif" lazyload alt="img2"></p>
+</li>
+</ul>
+<ul>
+<li><p><strong>网络结构：</strong></p>
+<p>如下图，输入的尺寸为 384×128，用的backbone为ResNet-50，如果在不做任何改变的情况下，它的特征图谱输出尺寸，从下方表格可以看到，global 这个地方就相当于对 Resnet 50不做任何的改变，特征图谱输出是 12×4。</p>
+<p>下面有一个 part-2 跟 part-3，这是在 Res4_1 的位置，本来是有一个stride 等于 2 的下采样的操作，我们把 2 改成 1，没有下采样，这个地方的尺寸就不会缩小 2，所以 part-2 跟 part-3 比 global 大一倍的尺寸，它的尺寸是 24×8。为什么要这么操作？因为会强制分配 part-2 跟 part-3 去学习细粒度特征，如果把特征尺寸做得大一点，相当于信息更多一点，更利于网络学到更细节的特征。</p>
+<p>网络结构从左到右，先是两个人的图片输入，这边有 3 个模块。3 个模块的意思是表示 3 个分支共享网络，前三层这三个分支是共享的，到第四层时分成三个支路，第一个支路是 global 的分支，第二个是 part-2 的分支，第三个是 part-3 的分支。在 global 的地方有两块，右边这个方块比左边的方块大概缩小了一倍，因为做了个下采样，下面两个分支没有做下采样，所以第四层和第五层特征图是一样大小的。</p>
+<p>接下来我们对 part-2 跟 part-3 做一个从上到下的纵向分割，part-2 在第五层特征图谱分成两块，part-3 对特征图谱从上到下分成三块。在分割完成后，我们做一个 pooling，相当于求一个最值，我们用的是 Max-pooling，得到一个 2048 的向量，这个是长条形的、横向的、黄色区域这个地方。</p>
+<p>但是 part-2 跟 part-3 的操作跟 global 是不一样的，part-2 有两个 pooling，第一个是蓝色的，两个 part 合在一起做一个 global-pooling，我们强制 part-2 去学习细节的联合信息，part-2 有两个细的长条形，就是刚才引导它去学细节型的信息。淡蓝色这个地方变成小方体一样，是做降维，从 2048 维做成 256 维，这个主要方便特征计算，因为可以降维，更快更有效。在测试的时候会在淡蓝色的地方，小方块从上到下应该是 8 个，我们把这 8 个 256 维的特征串连一个 2048 的特征，用这个特征替代前面输入的图片。</p>
+</li>
+</ul>
+<p>  <img src="/2021/09/06/MGN-net/img4.png" srcset="/img/loading.gif" lazyload alt="img4"></p>
+<p>​                     <img src="/2021/09/06/MGN-net/img3.png" srcset="/img/loading.gif" lazyload alt="img3"></p>
+<ul>
+<li><p><strong>Loss设计：</strong>Loss说简单也简单，说复杂也复杂。从头到尾就用了两种Loss，一个是<a target="_blank" rel="noopener" href="https://blog.csdn.net/luoxuexiong/article/details/90062937?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163084429216780264058404%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=163084429216780264058404&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v29_ecpm-5-90062937.first_rank_v2_pc_rank_v29&amp;utm_term=softmaxloss&amp;spm=1018.2226.3001.4187">SoftmaxLoss</a>，一个是<a target="_blank" rel="noopener" href="https://blog.csdn.net/jcjx0315/article/details/77160273?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163084436916780366577047%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=163084436916780366577047&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-77160273.first_rank_v2_pc_rank_v29&amp;utm_term=tripletloss&amp;spm=1018.2226.3001.4187">TripletLoss</a>(这两个Loss有空写一下现在就将就放个链接)。</p>
+<p>分别如下两图所示</p>
+<script type="math/tex; mode=display">
+L_{softmax} = -\sum_{i=1}^{N}log\frac{e^{w^{T}_{yi}}f_{i}}{\sum_{k=1}^{C}e^{w^{T}_{k}}f_{i}}\tag 1</script><script type="math/tex; mode=display">
+L_{triplet}=-\sum_{i=1}^{p}\sum_{a=1}^{k}[a+\underset{p=1...k}{max}||f_{a}^{(i)}-f_{p}^{(i)}||_{2}-\min_{n=1...K\\j=1...P }||f_{a}^{(i)}-f_{=n}^{(i)}||_{2}]\tag 2</script><p>在global分支上，对2048维做了SoftmaxLoss，对256维做了TripletLoss，这是对global信息通用的方法。下面两个部分global的处理方式也是一样的。中间part-2有一个全局信息，做两个Loss。</p>
+<p>但是，下面两个 Local 特征看不到 TripletLoss，只用了 SoftmaxLoss，如果对细节当和分支做 TripletLoss，效果会变差。为什么效果会变差？</p>
+<p>一张图片分成从上到下两部分的时候，最完美的情况当然是上面部分是上半身，下面部分是下半身，但是在实际的图片中，有可能整个人都在上半部分，下半部分全是背景，这种情况用上、下部分来区分，假设下半部分都是背景，把这个背景放到 TripletLoss 三元损失里去算这个 Loss，就会使得这个模型学到莫名其妙的特征。</p>
+<p>比如背景图是个树，另外一张图是某个人的下半身，比如一个女生的下半身是一个裙子，你让裙子跟另外图的树去算距离，无论是同类还是不同类，算出来的距离是没有任何物理意义或实际意义的。从模型的角度来讲，它属于污点数据，这个污点数据会引导整个模型崩溃掉或者学到错误信息，使得预测的时候引起错误。</p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​        在使用SGD momentum=0.9，Learning rate=0.01的情况下，做了weight decay = 0.0005，分别在第40个epoch和第60个epoch，在Market1501训练80个epochs，Rank1达到了95.7%，mAP为86.9%。</p>
+<p>​        对一些已知测试集数据分布的情况下，可以用<a target="_blank" rel="noopener" href="https://blog.csdn.net/lwplwf/article/details/84862054?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163084500416780255262323%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=163084500416780255262323&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~sobaiduend~default-1-84862054.pc_v2_rank_blog_default&amp;utm_term=rerank&amp;spm=1018.2226.3001.4450">ReRank</a>技术把指标大大提高。</p>
+<p>​        基于paddlepaddle深度学习框架的代码已复现，并开源至<a target="_blank" rel="noopener" href="https://github.com/Mr-ind1fferent/Re-ID_MGN_Paddlepaddle">https://github.com/Mr-ind1fferent/Re-ID_MGN_Paddlepaddle</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">各类激活函数介绍</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/23/ReID_MGN_Paddlepaddle/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

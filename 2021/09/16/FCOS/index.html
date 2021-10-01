@@ -1,0 +1,506 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <meta name="description" content="FCOS: Fully Convolutional One-Stage Object Detection​    FCOS是一个基于FCN（全卷积网络）、一阶段（one stage）、anchor free、参考语义分割实现逐像素的单阶段目标检测。原论文地址. 摘要 We propose a fully convolutional one-stage object detector (FCOS)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FCOS">
+<meta property="og:url" content="http://example.com/2021/09/16/FCOS/index.html">
+<meta property="og:site_name" content="想饮一些酒，让灵魂失重，好被风吹走。">
+<meta property="og:description" content="FCOS: Fully Convolutional One-Stage Object Detection​    FCOS是一个基于FCN（全卷积网络）、一阶段（one stage）、anchor free、参考语义分割实现逐像素的单阶段目标检测。原论文地址. 摘要 We propose a fully convolutional one-stage object detector (FCOS)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/09/16/FCOS/img1.png">
+<meta property="og:image" content="http://example.com/2021/09/16/FCOS/img2.png">
+<meta property="og:image" content="http://example.com/2021/09/16/FCOS/img3.png">
+<meta property="article:published_time" content="2021-09-16T04:40:23.000Z">
+<meta property="article:modified_time" content="2021-09-17T06:28:27.844Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2021/09/16/FCOS/img1.png">
+  
+  <title>FCOS - 想饮一些酒，让灵魂失重，好被风吹走。</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="想饮一些酒，让灵魂失重，好被风吹走。" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FCOS">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-16 12:40" pubdate>
+        September 16, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FCOS</h1>
+            
+            <div class="markdown-body">
+              <h1 id="FCOS-Fully-Convolutional-One-Stage-Object-Detection"><a href="#FCOS-Fully-Convolutional-One-Stage-Object-Detection" class="headerlink" title="FCOS: Fully Convolutional One-Stage Object Detection"></a>FCOS: Fully Convolutional One-Stage Object Detection</h1><p>​    FCOS是一个基于FCN（全卷积网络）、一阶段（one stage）、anchor free、参考语义分割实现逐像素的单阶段目标检测。原论文<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.01355v5.pdf">地址</a>.</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><blockquote>
+<p>We propose a fully convolutional one-stage object detector (FCOS) to solve object detection in a per-pixel prediction fashion, analogue to semantic segmentation. Almost all state-of-the-art object detectors such as RetinaNet, SSD, YOLOv3, and Faster R-CNN rely on pre-defined anchor boxes. In contrast, our proposed detector FCOS is anchor box free, as well as proposal free. By eliminating the predefined set of anchor boxes, FCOS completely avoids the complicated computation related to anchor boxes such as calculating overlapping during training. More importantly, we also avoid all hyper-parameters related to anchor boxes, which are often very sensitive to the final detection performance. With the only post-processing non-maximum suppression (NMS), FCOS with ResNeXt-64x4d-101 achieves 44.7% in AP with single-model and single-scale testing, surpassing previous one-stage detectors with the advantage of being much simpler. For the first time, we demonstrate a much simpler and flexible detection framework achieving improved detection accuracy. We hope that the proposed FCOS framework can serve as a simple and strong alternative for many other instance-level tasks</p>
+</blockquote>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><ul>
+<li>FCOS方法借鉴了FCN的思想，在每个feature map上的特征点做回归操作，预测（l，r，t，d）四个值，代表了到GTBox的上、下、左、右的距离。</li>
+<li>引入了FPN结构，利用不同的层来处理不同尺寸的目标框。</li>
+<li>引入了Centerness Layer来增强中心点选取的准确性</li>
+<li>分类损失focal loss；回归损失iou loss；centerness损失BCE</li>
+</ul>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="Anchor-based的缺点"><a href="#Anchor-based的缺点" class="headerlink" title="Anchor-based的缺点"></a>Anchor-based的缺点</h2><ul>
+<li>anchor-base模型的检测性能一定程度上依赖于anchor的设计，anchor的基础尺寸、长宽比、以及每一个特征点对应的anchor数目等。比如Faster提出的基准anchor大小16，3种倍数[8, 16, 32] 以及三种比例，共9种anchor。</li>
+<li>设定好anchor了只能说是匹配到大部分目标，对于那些形变较大的目标检测起来还是比较困难，同时这也一定程度上限制了模型的泛化能力。</li>
+<li>为了取得较好的召回率，那就需要为每个特征点安排更密集的anchor，在前向推演以及NMS等操作时，显存以及CPU消耗很大。</li>
+<li>在这些放置的更密集的anchor中，大多数anchor属于负样本，这样也造成了正负样本之间的不均衡。（Faster好像各选128 positive / negtive 作为训练anchor，不过肯定不是随机挑选的）</li>
+</ul>
+<h2 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h2><p>下图是FCOS的模型结构：</p>
+<p><img src="/2021/09/16/FCOS/img1.png" srcset="/img/loading.gif" lazyload alt="img1"></p>
+<p>整体还是非常传统的Bckbone+FPN+head结构</p>
+<h2 id="论文中的一些定义"><a href="#论文中的一些定义" class="headerlink" title="论文中的一些定义"></a>论文中的一些定义</h2><ul>
+<li><p>第i个GTbox的定义为：$B_{i}$,其中$(x_{0}^{(i)},y_{0}^{(i)})$，$(x_{1}^{(i)},y_{1}^{(i)})$表示的是当前Bbox左上角和右下角的坐标。</p>
+</li>
+<li><p>回归分支预测的为当前点$(X,Y)$到GTBox边界的距离$(l,r,t,d)$，真实标签定义为$(l^{*},r^{*},t^{*},d^{*})$。值如下计算：</p>
+</li>
+<li><p>映射回的点如果在一个GTBox内就归为正样本，类别为BBOX内的目标类别，其余归为负样本。</p>
+</li>
+<li><p>按照s(下采样总倍数)将特征点映射回原图，参照公式</p>
+<script type="math/tex; mode=display">
+(x^{'},y^{'}) = (floor(\frac{s}{2}) + xs, floor(\frac{s}{2}) + ys)\tag1</script><p>特征点上的点为$(x,y)$，原图位置为$(x^{‘},y^{‘})$</p>
+</li>
+</ul>
+<h2 id="FPN"><a href="#FPN" class="headerlink" title="FPN"></a>FPN</h2><p>当一个$(x^{‘’},y^{‘’})$落在多个GTBox中，该论文将该特征点称为模糊样本，论文中说道：</p>
+<blockquote>
+<p>If a location falls into multiple bounding boxes, it is considered as an ambiguous sample.We simply choose the bounding box with minimal area as its regression target.</p>
+</blockquote>
+<p>论文简单的选择面积更小的GTBox做为回归目标。</p>
+<p>与anchor-based的模型不同，FCOS选择了设置阈值来限制每一层feature map的回归范围。具体操作如下</p>
+<ol>
+<li>首先计算出不同层级feature map上每个特征点对应的回归目标$(l^{*},r^{*},t^{*},d^{*})$</li>
+<li>如果特征点满足$max((l^{*},r^{*},t^{*},d^{*})&gt;m_{i})max((l^{*},r^{*},t^{*},d^{*})&lt;m_{i-1})$，将该样本认定为负样本。</li>
+<li>m_{i}表示为第i层feature map回归的做大距离，本文设置了$(m_{2},m_{3},m_{4},m_{5},m_{6},m_{7} = 0,64,128,258,512,\infty)$，例如p3回归的范围为[0,64]，p4范围就为[64,128]</li>
+</ol>
+<p>如果回归在了两个GTBox里，就要分为两种情况</p>
+<ol>
+<li>假定一个格子表示16px，A距离紫色边界的最大距离为48px，距离绿色的最大距离为90px，根据p3的范围，对应的是紫色框，如果没有GTBox，就为负样本。</li>
+<li>如果一个格子表示8px，那么A距离紫色边界最大距离为24px，距离绿色最大距离为40px，在都符合要求的情况下选择面积更小的作为回归目标</li>
+<li><img src="/2021/09/16/FCOS/img2.png" srcset="/img/loading.gif" lazyload alt="img2"></li>
+</ol>
+<h2 id="Center-ness-Layer"><a href="#Center-ness-Layer" class="headerlink" title="Center-ness Layer"></a>Center-ness Layer</h2><p>​    由于一个特征点映射到原图的时候可能位于GTBox的边缘或者距离中心较远的位置，因此在模型学习的时候可能会认为这个点不属于它本该的目标，导致了出现新的box。</p>
+<p>​    为了解决这个问题，提出了中心度的思想，告诉哪些点是目标最可能的中心点（告诉某些点不是中心点）。</p>
+<p>​    将目标中心点的值设定为1，距离越远该值就越趋近于0。真实值标签计算方法如下公式所示：</p>
+<script type="math/tex; mode=display">
+centerness^{*} = \sqrt{\frac{min(l^{*},r^{*})}{max(l^{*}{r^{*}})}\times\frac{min(t^{*},b^{*})}{max(t^{*},b^{*})}}\tag2</script><p>​    这部分的损失使用<a target="_blank" rel="noopener" href="https://blog.csdn.net/geter_CS/article/details/84747670?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163184001516780264071086%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=163184001516780264071086&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-84747670.first_rank_v2_pc_rank_v29&amp;utm_term=bce%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0&amp;spm=1018.2226.3001.4187">BCE</a>损失。</p>
+<p>​    模型的最终输出是一组置信度高的box和类别，然后使用NMS进行抑制筛选。模型的最终输出置信度=(类别的概率)*(对应的center-ness)。</p>
+<p>​    center-ness会让模型更加关注到距离真实目标中心点近的预测box。</p>
+<p>​    下图的实验证明了这样的相乘是有意义的，置信度越高预测出来的box和GTBox的IOU越高。</p>
+<p>​    <img src="/2021/09/16/FCOS/img3.png" srcset="/img/loading.gif" lazyload alt="img3"></p>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><ul>
+<li>分类损失，弃用了softmax，对head输出的分类的每一个通道分别使用sigmoid函数，最后使用Focal loss来计算。</li>
+<li>回归损失：IOU Loss，对有意义的特征点进行回归，$c^{*}_{x,y}=0$ 就是不在一个GTBox的对应点，为负样本。如果在一个或者多个box，根据阈值重复筛选直到有意义即$c^{*}_{x,y}&gt;0$</li>
+<li>center-ness损失：BCE损失，为什么没有在论文公式图里？？？？</li>
+</ul>
+<h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><p>​    在引入FPN的同时还引入一些改变，FCOS在不同的特征层级之间共享head（共享的是结构/权重共享 ）。但是不同的特征层级需要回归不同的大小范围（例如，P3的大小范围是[0，64]，P4的大小范围是[64，128]，因此对于不同的特征层级使用相同的head是不合理的。因此，论文中不再使用标准的$exp(x)$，而是使用$exp( s_{i}* x)$，其中可训练标量  被用来自动调整不同层级特征的指数函数的基数，从而稍微提高了检测性能</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>可以引入一些提升性能的trick，比如GN，可变性卷积等</li>
+<li>实现了proposal free 和 anchor free，避免了复杂的iou计算了匹配，（但是翻了一下别人的博客说用特征分布有差异的数据集训练普适性不是很好。</li>
+<li>修改一下可以做实例分割、关键点检测等</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/09/23/Light-weight/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Light-weight</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/12/Introduction/">
+                        <span class="hidden-mobile">Introduction</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</body>
+</html>
