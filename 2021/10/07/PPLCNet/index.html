@@ -16,15 +16,24 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta property="og:type" content="article">
+  <meta name="description" content="这是百度团队针对Intel-CPU端加速而设计的高推理速度和高性能的PP-LCNet，原论文链接 摘要 We propose a lightweight CPU network based on the MKLDNN acceleration strategy, named PP-LCNet, which improves the performance of lightweight models">
+<meta property="og:type" content="article">
 <meta property="og:title" content="PPLCNet">
 <meta property="og:url" content="http://example.com/2021/10/07/PPLCNet/index.html">
 <meta property="og:site_name" content="想饮一些酒，让灵魂失重，好被风吹走。">
+<meta property="og:description" content="这是百度团队针对Intel-CPU端加速而设计的高推理速度和高性能的PP-LCNet，原论文链接 摘要 We propose a lightweight CPU network based on the MKLDNN acceleration strategy, named PP-LCNet, which improves the performance of lightweight models">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/10/07/PPLCNet/blog/source/_posts/PPLCNet/img1.png">
+<meta property="og:image" content="http://example.com/2021/10/07/PPLCNet/blog/source/_posts/PPLCNet/img4.png">
+<meta property="og:image" content="http://example.com/2021/10/07/PPLCNet/blog/source/_posts/PPLCNet/img2.png">
+<meta property="og:image" content="http://example.com/2021/10/07/PPLCNet/blog/source/_posts/PPLCNet/img3.png">
+<meta property="og:image" content="http://example.com/2021/10/07/PPLCNet/blog/source/_posts/PPLCNet/img5.png">
+<meta property="og:image" content="http://example.com/2021/10/07/PPLCNet/blog/source/_posts/PPLCNet/img6.png">
 <meta property="article:published_time" content="2021-10-07T11:58:30.000Z">
-<meta property="article:modified_time" content="2021-10-07T11:58:50.560Z">
+<meta property="article:modified_time" content="2021-10-07T14:00:06.785Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2021/10/07/PPLCNet/blog/source/_posts/PPLCNet/img1.png">
   
   <title>PPLCNet - 想饮一些酒，让灵魂失重，好被风吹走。</title>
 
@@ -67,10 +76,10 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="想饮一些酒，让灵魂失重，好被风吹走。" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="想饮一些酒，让灵魂失重，好被风吹走。" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 <body>
@@ -196,7 +205,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      1.8k 字
     </span>
   
 
@@ -205,7 +214,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1 分钟
+      6 分钟
     </span>
   
 
@@ -237,7 +246,49 @@
             <h1 style="display: none">PPLCNet</h1>
             
             <div class="markdown-body">
-              
+              <p>这是百度团队针对Intel-CPU端加速而设计的高推理速度和高性能的PP-LCNet，原论文<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2109.15099.pdf">链接</a></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><blockquote>
+<p>We propose a lightweight CPU network based on the MKLDNN acceleration strategy, named PP-LCNet, which improves the performance of lightweight models on multiple tasks. This paper lists technologies which can improve network accuracy while the latency is almost constant. With these improvements, the accuracy of PP-LCNet can greatly surpass the previous network structure with the same inference time for classification. As shown in Figure 1, it outperforms the most state-of-the-art models. And for downstream tasks of computer vision, it also performs very well, such as object detection, semantic segmentation, etc. All our experiments are implemented based on PaddlePaddle1. Code and pretrained models are available at PaddleClas2.</p>
+</blockquote>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>提出了基于MKLDNN加速的轻量CPU模型，列举了一些提升精度延迟不变的技术，在图像分类任务，PP-LCNet在推理延迟、精度方面优于ShuffleNetV2、MobileNetV3等。</p>
+<p><img src="/2021/10/07/PPLCNet/blog\source\_posts\PPLCNet\img1.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>由于百度和Intel合作的关系：），这次百度的PPLCNet考虑了Intel CPU的推理速度，推出了这个网络。</p>
+<ul>
+<li><p><strong>Better activation function</strong></p>
+<p>采用了H-Swish激活函数代替了ReLU，提升性能，推理速度不变</p>
+<script type="math/tex; mode=display">
+h-swish[x] = x\frac{ReLU6(x+3)}{6}</script><p>在移动设备上计算sigmoid函数的代价很大，所以使用了ReLU6版本的h-swish激活函数</p>
+</li>
+<li><p><strong>Larger convolution kernels</strong></p>
+<p>由于不同尺寸的卷积对网络性能的影响会降低模型的推理速度，作者实验发现在网络的尾部采用$5\times5$的卷积核可以取得相近的效果。</p>
+<p><img src="/2021/10/07/PPLCNet/blog\source\_posts\PPLCNet\img4.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>上表展示了在尾部使用大卷积有更好的效果。</p>
+</li>
+<li><p><strong>Larger dimensional $1\times1$conv layer after GAP</strong></p>
+<p>由于GAP后输出维度小，直接分类的话性能小，所以添加了一个1280维度的$1\times1$的卷积，在小的推理延迟下提高性能。</p>
+<p><img src="/2021/10/07/PPLCNet/blog\source\_posts\PPLCNet\img2.png" srcset="/img/loading.gif" lazyload alt=""></p>
+</li>
+<li><p><strong>SE modules</strong></p>
+<p>虽然SE被广泛应用到网络架构中，但在Intel CPU端，耗时会提高所以不能在整个网络中使用，</p>
+<p>论文中说，在把SE模块放在模型的尾部有更好的作用，SE模块的两个激活函数为ReLU和H-Sigmoid。</p>
+<blockquote>
+<p>However, on Intel CPUs, the SE module increases the inference time, so that we cannot<br>use it for the whole network. In fact, we have done a lot of experiments and observed that when the SE module is located at the end of the network, it can play a better role.<br>So we just add the SE module to the blocks near the tail of the network. This results in a better accuracy-speed balance. As with MobileNetV3, the activation functions for the two layers of the SE module are ReLU and H-Sigmoid respectively.</p>
+</blockquote>
+<p>下图对比了SE的位置对模型性能的影响，可以发现仅在尾部添加两个SE模块效果更好。</p>
+<p><img src="/2021/10/07/PPLCNet/blog\source\_posts\PPLCNet\img3.png" srcset="/img/loading.gif" lazyload alt=""></p>
+</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><img src="/2021/10/07/PPLCNet/blog\source\_posts\PPLCNet\img5.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img src="/2021/10/07/PPLCNet/blog\source\_posts\PPLCNet\img6.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>上面两个表展示了移除不同模块的影响，可以总结</p>
+<ul>
+<li>使用dropout提高了精度</li>
+<li>在GAP后采用更大FC层提高了模型性能</li>
+<li>在合适的位置使用少量的SE</li>
+<li>使用大的卷积核提高性能，推理耗时几乎不变</li>
+<li>使用H-Swish激活函数</li>
+</ul>
+
             </div>
             <hr>
             <div>

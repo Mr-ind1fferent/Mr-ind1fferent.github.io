@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-07T11:58:50.560Z</updated>
+  <updated>2021-10-07T14:00:06.785Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,8 +21,17 @@
     <link href="http://example.com/2021/10/07/PPLCNet/"/>
     <id>http://example.com/2021/10/07/PPLCNet/</id>
     <published>2021-10-07T11:58:30.000Z</published>
-    <updated>2021-10-07T11:58:50.560Z</updated>
+    <updated>2021-10-07T14:00:06.785Z</updated>
     
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;这是百度团队针对Intel-CPU端加速而设计的高推理速度和高性能的PP-LCNet，原论文&lt;a href=&quot;https://arxiv.org/pdf/2109.15099.pdf&quot;&gt;链接&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot;</summary>
+        
+      
     
     
     
@@ -98,7 +107,7 @@
     <link href="http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/"/>
     <id>http://example.com/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/</id>
     <published>2021-09-06T13:12:14.000Z</published>
-    <updated>2021-09-08T05:18:23.778Z</updated>
+    <updated>2021-10-07T12:54:07.752Z</updated>
     
     
       
