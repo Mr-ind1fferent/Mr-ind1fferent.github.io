@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://example.com/2021/09/23/Light-weight/shufflev2_4.png">
 <meta property="og:image" content="http://example.com/2021/09/23/Light-weight/shufflev2_5.png">
 <meta property="article:published_time" content="2021-09-23T06:20:13.000Z">
-<meta property="article:modified_time" content="2021-10-05T08:21:00.110Z">
+<meta property="article:modified_time" content="2021-10-07T11:49:52.320Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2021/09/23/Light-weight/img1.png">
@@ -80,10 +80,10 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="想饮一些酒，让灵魂失重，好被风吹走。" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="想饮一些酒，让灵魂失重，好被风吹走。" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -266,14 +266,14 @@
 </li>
 <li><p><strong>分组卷积（Group convolution）</strong></p>
 <p>最早提出在AlexNet中，那时GPU的性能还不支持全部卷积同时操作，所以作者提出把feature map分给多个GPU进行处理，最后再融合。如下图：</p>
-<p><img src="/2021/09/23/Light-weight/img1.png" srcset="/img/loading.gif" lazyload alt="img1"></p>
+<p><img src="/2021/09/23/Light-weight/img1.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>图中输入的数据再深度上被分成的g组，具体的数量由$(C1/g)$决定，相应的每一组的卷积核的深度也变成了$(C1/g)$，每一组的个数变成了$(C2/g)$。最后通过concat进行组合。例如输入为256，输出为256，$kernel size = 3\times3$，普通卷积的参数量为$256\times3\times3\times256$，若g=8，则参数量变为$8\times32\times3\times3\times32$，减少了8倍。</p>
 </li>
 </ul>
 <ul>
 <li><p><strong>空洞卷积（Dilated Convoluton）</strong></p>
 <p>空洞卷积针对下采样降低图片分辨率而提出，通过间隔取值来扩大感受野，让原本$3\times3$的卷积核，在参数量和计算量相同的情况下拥有更大的感受野。通过设置你的扩张率系数（决定了间隔大小），标准卷积的扩张率为1，下图为扩张率为2的空洞卷积</p>
-<p><img src="/2021/09/23/Light-weight/img2.png" srcset="/img/loading.gif" lazyload alt="img2"></p>
+<p><img src="/2021/09/23/Light-weight/img2.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>相当于用一个$3\times3$的卷积大小来充当一个$5\times5$的卷积核大小，类似于间隔补0。</p>
 <p>但它的缺点也很明显，并不会采集到所有像素的信息，对一些小目标来说，效果也不太好。</p>
 </li>
@@ -301,18 +301,18 @@
 <h2 id="ShuffleNet系列"><a href="#ShuffleNet系列" class="headerlink" title="ShuffleNet系列"></a>ShuffleNet系列</h2><ul>
 <li><p>ShuffleNet V1，引入了分组点卷积（pointwise group convolution）和通道重排（channel shuffle）两个新操作，保持精度同时减少算力消耗。但分组点卷积的输出仅来自于一小部分的输入通道，组织了信息的流通和特征表示，所以非常自然而然地想到如果从不同组里获取输入数据，那么输入和输出通道是不是就相关了呢。</p>
 <p><strong>通道重排（Channel shuffle）：</strong>首先假定某卷积层分为$g$组，输出特征通道数为$g\times g$，再使用$reshape$操作将$gn$个通道数变为维度为$(g,n)$，之后使用$transpose$转置，最后使用$flatten$展开做为下一组卷积的输入。如下图，$g=3,n=4$</p>
-<p><img src="/2021/09/23/Light-weight/shuffle.png" srcset="/img/loading.gif" lazyload alt="shuffle"></p>
+<p><img src="/2021/09/23/Light-weight/shuffle.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p><strong>ShuffleNet Unit：</strong>第一种是将ResNet中的bottleneck，将标准卷积替换为深度卷积，第二种是最常用的，也就是将密集的点卷积替换成分组点卷积，第三种就是针对降采样情况，将元素的add变为通道的叠加。</p>
-<p><img src="/2021/09/23/Light-weight/shuffle2.png" srcset="/img/loading.gif" lazyload alt="shuffle2"></p>
+<p><img src="/2021/09/23/Light-weight/shuffle2.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p><strong>FLOPs：</strong>输入特征为$h\times w\times c$，Bottleneck通道数为$m$，分组数为$g$，$F = hw\frac{c}{g}\frac{m}{g}g + 3\times3hwm + hw\frac{c}{g}\frac{m}{g}g = hw(\frac{2cm}{g} + 9m)$对比于ResNet的$F = hw(2cm + 9m^{2})$减少了很多计算量。</p>
 <p><strong>网络结构：</strong></p>
 </li>
 <li><p>shuffleNet V2，总共有四个新发现：</p>
 <ol>
-<li>当输入输出通道数相同时，运算速度最快，<img src="/2021/09/23/Light-weight/shufflev2.png" srcset="/img/loading.gif" lazyload alt="shufflev2"></li>
-<li>过度使用组卷积增加额外算力消耗，<img src="/2021/09/23/Light-weight/shufflev2_1.png" srcset="/img/loading.gif" lazyload alt="shufflev2_1"></li>
-<li>Element-wise operation消耗较多的时间，<img src="/2021/09/23/Light-weight/shufflev2_2.png" srcset="/img/loading.gif" lazyload alt="shufflev2_2"></li>
-<li>过度使用组卷积额外增加算力消耗，<img src="/2021/09/23/Light-weight/shufflev2_3.png" srcset="/img/loading.gif" lazyload alt="shufflev2_3"></li>
+<li>当输入输出通道数相同时，运算速度最快，<img src="/2021/09/23/Light-weight/shufflev2.png" srcset="/img/loading.gif" lazyload alt=""></li>
+<li>过度使用组卷积增加额外算力消耗，<img src="/2021/09/23/Light-weight/shufflev2_1.png" srcset="/img/loading.gif" lazyload alt=""></li>
+<li>Element-wise operation消耗较多的时间，<img src="/2021/09/23/Light-weight/shufflev2_2.png" srcset="/img/loading.gif" lazyload alt=""></li>
+<li>过度使用组卷积额外增加算力消耗，<img src="/2021/09/23/Light-weight/shufflev2_3.png" srcset="/img/loading.gif" lazyload alt=""></li>
 </ol>
 <p>针对这些问题，作者的创新与改进：</p>
 <ol>
@@ -321,9 +321,9 @@
 <li>channel shuffle放到维度叠加后（防止碎片化）</li>
 <li>将element-wise add替换为concat（减少时间消耗）</li>
 </ol>
-<p><img src="/2021/09/23/Light-weight/shufflev2_4.png" srcset="/img/loading.gif" lazyload alt="shufflev2_4"></p>
+<p><img src="/2021/09/23/Light-weight/shufflev2_4.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p><strong>网络结构：</strong></p>
-<p><img src="/2021/09/23/Light-weight/shufflev2_5.png" srcset="/img/loading.gif" lazyload alt="shufflev2_5"></p>
+<p><img src="/2021/09/23/Light-weight/shufflev2_5.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>在全连接层前加一层标准卷积Conv5，类似MovileNet思想，通过超参数来所见通道</p>
 </li>
 </ul>
