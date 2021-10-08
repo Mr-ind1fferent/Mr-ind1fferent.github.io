@@ -447,8 +447,8 @@
 <ol>
 <li>当输入输出通道数相同时，运算速度最快，<img src="/2021/09/23/Light-weight/shufflev2.png" alt=""></li>
 <li>过度使用组卷积增加额外算力消耗，<img src="/2021/09/23/Light-weight/shufflev2_1.png" alt=""></li>
-<li>Element-wise operation消耗较多的时间，<img src="/2021/09/23/Light-weight/shufflev2_2.png" alt=""></li>
-<li>过度使用组卷积额外增加算力消耗，<img src="/2021/09/23/Light-weight/shufflev2_3.png" alt=""></li>
+<li>网络的多通路结构让网络碎片化，拖慢时间，<img src="/2021/09/23/Light-weight/shufflev2_2.png" alt=""></li>
+<li>Element-wise operation消耗较多的时间，<img src="/2021/09/23/Light-weight/shufflev2_3.png" alt=""></li>
 </ol>
 <p>针对这些问题，作者的创新与改进：</p>
 <ol>
