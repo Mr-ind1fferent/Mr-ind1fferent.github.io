@@ -6,7 +6,7 @@
   <!-- <meta name="baidu-site-verification" content="LukfTcyXmC" /> -->
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">archive_a: 2021/10 | 想饮一些酒，让灵魂失重，好被风吹走。</title>
+  <title itemprop="name">fine-grained-review | 想饮一些酒，让灵魂失重，好被风吹走。</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -372,262 +372,214 @@
 
       
       <!-- body -->
-      <div class="blank" style="padding-top: 75px;">
-</div>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/cungudafa/cdn/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
 <div id="content" class="site-content">
-  <div id="main">
-    <header class="page-header">
-      <h1 class="cat-title">
-        归档</h1>
-      <span class="cat-des">
-        <p>
-          Archives</p>
-      </span>
-      <br>
-      <span class="post-meta-item-icon">
-        <i class="iconfont icon-attention"></i>
-      </span>
-      <span class="post-meta-item-text"><span id="busuanzi_value_page_pv"> </span>
-      </span>
-    </header>
-    <div id="main-part">
-      <article class="art">
-        <div class="art-main">
-          <div class="art-content">
-            <div id="archives">
-              <p style="text-align:right;">
-                [<span id="al_expand_collapse" style="cursor: s-resize;">
-                  全部展开/收缩</span>
-                ]</p>
-              
-              
-              
-              
-              
-              
-              <h3 class="al_year">2021年</h3>
-              
-              
-              
-              <ul class="al_mon_list">
-                <li class="al_li">
-                  <span class="al_mon" style="cursor: s-resize;">
-                    10月(<span id="post-num">
-                      3</span>
-                    篇文章)</span>
-                  <ul class="al_post_list" style="">
-                    
-                    <li>
-                      <a href="/2021/10/30/fine-grained-review/">
-                        <span style="color:#0bf;">
-                          30日11:48:01</span>
-                        fine-grained-review
-                      </a>
-                    </li>
-                    
-              
-              
-              
-              
-              
-                    <li>
-                      <a href="/2021/10/07/PPLCNet/">
-                        <span style="color:#0bf;">
-                          07日19:58:30</span>
-                        PPLCNet
-                      </a>
-                    </li>
-                    
-                  </ul>
-                </li>
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1"
+        class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content">  -->
+        <!--套嵌目录使用（主要为了支援评论）-->
+        
+        <div class="entry-content">
+          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
+<li><p><strong>什么是细粒度图像分类</strong></p>
+<p>细粒度图像分类就是在分类大类的子类进行识别，例如区分“哈士奇”和“柯基”，它们区分度往往在鼻子、毛色等地方，不止对计算机，对人来说挑战也巨大。</p>
+</li>
+<li><p><strong>意义</strong></p>
+<p>在生态保护中识别子类的生物进行生态研究、生物的特征识别、道路安全等等</p>
+</li>
+<li><p><strong>常用方法</strong></p>
+<ol>
+<li>深度卷积神经网络，但是难以捕获有区别性的局部细节，不太常用</li>
+<li>基于网络集成的方法，使用多个DCNN对细粒度钟的相似特征进行判别</li>
+<li>基于定位-识别方法，先找到有区分度的局部，再特征提取和分类，又可细分为强监督和若监督</li>
+<li>卷积特征的高阶编码（不懂）。</li>
+</ol>
+</li>
+</ul>
+<h1 id="基于定位-识别的方法"><a href="#基于定位-识别的方法" class="headerlink" title="基于定位-识别的方法"></a>基于定位-识别的方法</h1><p>类似人区别相似物体的方式，先扫描到有区别的区域，再进行对比，所以可以将基于定位-识别的方法将细粒度图像分为两部分：区别性区域定位和区域中的细粒度特征学习。在区别性区域定位，通常以强监督或者弱监督（趋势）的方法。</p>
+<ul>
+<li><p><strong>弱监督</strong></p>
+<ol>
+<li><p>两级注意力</p>
+<p>第一个尝试不使用额外的标注信息，仅仅使用类别标签来完成细粒度图像分类，结合了生成候选图像块的自底向上注意力、选择相关块形成特定物体的对象级自顶向下注意力、定位判别性部件的部件级自底向上的注意力。之后基于FilterNet选择出来的框训练DomainNet，使用相似矩阵将中间层分为K个簇（作用域与检测器相同），将各个簇选出的图像块缩放到DomainNet生成激活值，然后将不同部件的激活值汇总训练到一对多SVM分类器，最终将物体级和部件级的注意力预测结果合并。</p>
+<p>但是利用聚类得到的局部区域准确度有限，使用同样backbone的情况下精度低于Part R-CNN</p>
+</li>
+<li><p>细粒度分类注意力</p>
+<p>AFGC是一个基于GoogLeNet的RNN，在每个时间步处理一个多分辨率的图像块，网络使用该图像块更新图像的表征，与之前的激活值相结合，输出下一个注意点的位置或输出最终分类结果。</p>
+</li>
+<li><p>FCN注意力</p>
+<p>可对多个部件进行定位，同时提取多个注意力区域的特征，网络共包括局部定位模块和分类模块。局部定位使用全卷积网络，基于VGG16输出单通道的置信度映射图，最高的区域被选为部件位置。分类模块对所有部件和整张图像进行分类，对局部图像裁剪到模型输入大小，最后取所有部件及全局预测的均值。</p>
+</li>
+<li><p>多样化视觉注意力</p>
+<p>DVAN包括了注意力区域生成、CNN特征提取、LSTM视觉作为注意力提取、分类。在每个时间步都会预测物体类别，最后采用各个预测结果的均值。</p>
+</li>
+<li><p>RACNN</p>
+<p>使用互相强化的放视对判别区域注意力和基于区域的特征表征进行递归学习。通过尺度内分类损失和尺度间排序损失进行优化，以相互学习精度的区域注意力和细粒度表征。不需要边界框或边界部分的标注，可以进行端到端的训练。（单独写一篇）</p>
+</li>
+<li><p>MACNN</p>
+<p>（单独一篇）</p>
+</li>
+</ol>
+</li>
+<li><p><strong>强监督</strong></p>
+<p>强监督不仅需要类别标签，还需要部件标注和关键部位的框，虽然效果不错但是人工标注开销太大，并且依赖于标注者的认知。</p>
+<ol>
+<li><p>Part-based R-CNN</p>
+<p>利用SS算法生成候选框，利用Object Bounding Box和Part Annotation训练出三个检测模型，一个对应细粒度物体级别检测，一个对应物体头部检测，一个对应躯干部位检测，然后对他们进行位置几何约束，最后将得到的Patch输入训练一个CNN。其缺点也很明显，会产生许多无关区域，影响算法速度，第二个是需要借助标注。</p>
+</li>
+<li><p>Part-stack CNN</p>
+<p>PS-CNN使用全卷积网络进行部件定位和一个双流的分类网络对物体及部件的特征进行编码，FCN优点：特征图可以作为部件的定位结果用于分类网络，同时得到多部件的定位结果，推理高效。</p>
+</li>
+<li><p>Mask-CNN</p>
+<p>借助FCN学习一个部位分割模型，将其转化为三分类分割问题，一类为头部，一类为躯干，一类为背景，（这个之后会单独列出来写个文档）</p>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="基于网络集成的方法"><a href="#基于网络集成的方法" class="headerlink" title="基于网络集成的方法"></a>基于网络集成的方法</h1><p>将细粒度数据集划分为几个相似的子集进行分类，或者直接使用多个神经网络来提高细粒度分类的性能。</p>
+<ul>
+<li><p><strong>子集特征学习网络（Subset feature learning networks）</strong></p>
+<p>使用通用CNN和特定CNN两个部分。首先使用大规模数据集训练过的通用CNN并在细粒度数据集上迁移学习。同时在其fc6特征上使用LDA降维，将细粒度数据集钟外观相似的类聚类为K个子类并训练K个特定的CNN。在测试同时，使用子集CNN选择器（SCNN）选择输入图像相应的自己CNN。SCNN使用K个聚类结果作为类标签，将fc8的softmax输出数量改为K。最后使用最大投票法确定其子类。</p>
+</li>
+<li><p><strong>混合DCNN（Mixture of deep CNN）</strong></p>
+<p>MixDCNN不对数据集进行划分，学习K个特定的CNN。输入图像经过K个CNN，K个子CNN的分类结果通过分类占位概率（occupation probability）进行融合，通过占位概率，MixDCNN可以实现端到端训练。</p>
+</li>
+<li><p><strong>CNN树（CNN tree）</strong></p>
+<p>多分类问题将容易混淆的类称为混淆集，在混淆集中应采用判决性更强的特征进行区分，首先在类集合上训练模型，之后评估训练好模型每个类的混淆集，将各类的混淆集合并为几个混淆超集。之后将混淆超集做为子节点，在其上进一步学习，重复该过程，直到CNN树达到最大深度。（看不懂）</p>
+</li>
+<li><p><strong>多粒度CNN（Multiple granularity CNN）</strong></p>
+<p>多粒度CNN包含多个CNN，每个CNN都在给定的粒度进行分类。即多粒度CNN是由多个单粒度识别CNN组成。ROI通过自底向上的区域生成方法生成，与粒度相关。同时，ROI的选择是跨粒度相关的，细粒度的ROI通常是由粗粒度的ROI采样而来。之后，将ROI输入到各个粒度的特征提取网络提取其多粒度特征，最后将多粒度特征合并，产生最终的分类结果。</p>
+</li>
+</ul>
+
+        </div>
+
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN/img/custom/donate/AliPay.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/Mr-ind1fferent/CDN/img/custom/donate/WeChatPay.png"></li>
               </ul>
-              
-              
-              
-              
-              
-              
-              
-              <ul class="al_mon_list">
-                <li class="al_li">
-                  <span class="al_mon" style="cursor: s-resize;">
-                    09月(<span id="post-num">
-                      3</span>
-                    篇文章)</span>
-                  <ul class="al_post_list" style="">
-                    
-                    <li>
-                      <a href="/2021/09/23/Light-weight/">
-                        <span style="color:#0bf;">
-                          23日14:20:13</span>
-                        Light-weight
-                      </a>
-                    </li>
-                    
-              
-              
-              
-              
-              
-                    <li>
-                      <a href="/2021/09/16/FCOS/">
-                        <span style="color:#0bf;">
-                          16日12:40:23</span>
-                        FCOS
-                      </a>
-                    </li>
-                    
-              
-              
-              
-              
-              
-                    <li>
-                      <a href="/2021/09/12/Introduction/">
-                        <span style="color:#0bf;">
-                          12日15:45:51</span>
-                        Introduction
-                      </a>
-                    </li>
-                    
-              
-              
-              
-              
-              
-                    <li>
-                      <a href="/2021/09/06/%E5%90%84%E7%B1%BB%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/">
-                        <span style="color:#0bf;">
-                          06日21:12:14</span>
-                        各类激活函数介绍
-                      </a>
-                    </li>
-                    
-              
-              
-              
-              
-              
-                    <li>
-                      <a href="/2021/09/06/MGN-net/">
-                        <span style="color:#0bf;">
-                          06日12:34:02</span>
-                        MGN_net
-                      </a>
-                    </li>
-                    
-                  </ul>
-                </li>
-              </ul>
-              
-              
-            </div>
-            <div id="calendar">
-              
-                <div class="container archive-calendar">
-    <div class="card">
-        <div id="post-calendar" class="card-content"></div>
-    </div>
-</div>
-<style type="text/css">
-    #post-calendar {
-        width: 100%;
-        height: 225px;
-        margin-top: 20px;
-        border-radius: 12px;
-        background-color: rgb(255, 255, 255,0.5);
-    }
-</style>
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/js/echarts.min.js"></script>
-<script type="text/javascript">
-    let myChart = echarts.init(document.getElementById('post-calendar'));
-
-    
-
-    let option = {
-        title: {
-            top: 0,
-            text: '文章日历',
-            left: 'center',
-            textStyle: {
-                color: '#3C4858'
-            }
-        },
-        tooltip: {
-            padding: 10,
-            backgroundColor: '#555',
-            borderColor: '#777',
-            borderWidth: 1,
-            formatter: function (obj) {
-                var value = obj.value;
-                return '<div style="font-size: 14px;">' + value[0] + '：' + value[1] + '</div>';
-            }
-        },
-        visualMap: {
-            show: true,
-            showLabel: true,
-            categories: [0, 1, 2, 3, 4],
-            calculable: true,
-            inRange: {
-                symbol: 'rect',
-                color: ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127']
-            },
-            itemWidth: 12,
-            itemHeight: 12,
-            orient: 'horizontal',
-            left: 'center',
-            bottom: 0
-        },
-        calendar: [{
-            left: 'center',
-            range: ["2020-10-30", "2021-10-30"],
-            cellSize: [13, 13],
-            splitLine: {
-                show: false
-            },
-            itemStyle: {
-                width: '1.88679%',
-                height: '15px',
-                color: '#EEEEEE',
-                borderColor: '#FFF',
-                borderWidth: 2
-            },
-            yearLabel: {
-                show: false
-            },
-            monthLabel: {
-                nameMap: 'cn',
-                fontWeight: 'lighter',
-                fontSize: 12
-            },
-            dayLabel: {
-                show: true,
-                formatter: '{start}  1st',
-                fontWeight: 'lighter',
-                nameMap: ['日',' ','二',' ','四',' ','六',],
-                fontSize: 12
-            }
-        }],
-        series: [{
-            type: 'heatmap',
-            coordinateSystem: 'calendar',
-            calendarIndex: 0,
-            data: [["2020-10-30", 0], ["2020-10-31", 0], ["2020-11-01", 0], ["2020-11-02", 0], ["2020-11-03", 0], ["2020-11-04", 0], ["2020-11-05", 0], ["2020-11-06", 0], ["2020-11-07", 0], ["2020-11-08", 0], ["2020-11-09", 0], ["2020-11-10", 0], ["2020-11-11", 0], ["2020-11-12", 0], ["2020-11-13", 0], ["2020-11-14", 0], ["2020-11-15", 0], ["2020-11-16", 0], ["2020-11-17", 0], ["2020-11-18", 0], ["2020-11-19", 0], ["2020-11-20", 0], ["2020-11-21", 0], ["2020-11-22", 0], ["2020-11-23", 0], ["2020-11-24", 0], ["2020-11-25", 0], ["2020-11-26", 0], ["2020-11-27", 0], ["2020-11-28", 0], ["2020-11-29", 0], ["2020-11-30", 0], ["2020-12-01", 0], ["2020-12-02", 0], ["2020-12-03", 0], ["2020-12-04", 0], ["2020-12-05", 0], ["2020-12-06", 0], ["2020-12-07", 0], ["2020-12-08", 0], ["2020-12-09", 0], ["2020-12-10", 0], ["2020-12-11", 0], ["2020-12-12", 0], ["2020-12-13", 0], ["2020-12-14", 0], ["2020-12-15", 0], ["2020-12-16", 0], ["2020-12-17", 0], ["2020-12-18", 0], ["2020-12-19", 0], ["2020-12-20", 0], ["2020-12-21", 0], ["2020-12-22", 0], ["2020-12-23", 0], ["2020-12-24", 0], ["2020-12-25", 0], ["2020-12-26", 0], ["2020-12-27", 0], ["2020-12-28", 0], ["2020-12-29", 0], ["2020-12-30", 0], ["2020-12-31", 0], ["2021-01-01", 0], ["2021-01-02", 0], ["2021-01-03", 0], ["2021-01-04", 0], ["2021-01-05", 0], ["2021-01-06", 0], ["2021-01-07", 0], ["2021-01-08", 0], ["2021-01-09", 0], ["2021-01-10", 0], ["2021-01-11", 0], ["2021-01-12", 0], ["2021-01-13", 0], ["2021-01-14", 0], ["2021-01-15", 0], ["2021-01-16", 0], ["2021-01-17", 0], ["2021-01-18", 0], ["2021-01-19", 0], ["2021-01-20", 0], ["2021-01-21", 0], ["2021-01-22", 0], ["2021-01-23", 0], ["2021-01-24", 0], ["2021-01-25", 0], ["2021-01-26", 0], ["2021-01-27", 0], ["2021-01-28", 0], ["2021-01-29", 0], ["2021-01-30", 0], ["2021-01-31", 0], ["2021-02-01", 0], ["2021-02-02", 0], ["2021-02-03", 0], ["2021-02-04", 0], ["2021-02-05", 0], ["2021-02-06", 0], ["2021-02-07", 0], ["2021-02-08", 0], ["2021-02-09", 0], ["2021-02-10", 0], ["2021-02-11", 0], ["2021-02-12", 0], ["2021-02-13", 0], ["2021-02-14", 0], ["2021-02-15", 0], ["2021-02-16", 0], ["2021-02-17", 0], ["2021-02-18", 0], ["2021-02-19", 0], ["2021-02-20", 0], ["2021-02-21", 0], ["2021-02-22", 0], ["2021-02-23", 0], ["2021-02-24", 0], ["2021-02-25", 0], ["2021-02-26", 0], ["2021-02-27", 0], ["2021-02-28", 0], ["2021-03-01", 0], ["2021-03-02", 0], ["2021-03-03", 0], ["2021-03-04", 0], ["2021-03-05", 0], ["2021-03-06", 0], ["2021-03-07", 0], ["2021-03-08", 0], ["2021-03-09", 0], ["2021-03-10", 0], ["2021-03-11", 0], ["2021-03-12", 0], ["2021-03-13", 0], ["2021-03-14", 0], ["2021-03-15", 0], ["2021-03-16", 0], ["2021-03-17", 0], ["2021-03-18", 0], ["2021-03-19", 0], ["2021-03-20", 0], ["2021-03-21", 0], ["2021-03-22", 0], ["2021-03-23", 0], ["2021-03-24", 0], ["2021-03-25", 0], ["2021-03-26", 0], ["2021-03-27", 0], ["2021-03-28", 0], ["2021-03-29", 0], ["2021-03-30", 0], ["2021-03-31", 0], ["2021-04-01", 0], ["2021-04-02", 0], ["2021-04-03", 0], ["2021-04-04", 0], ["2021-04-05", 0], ["2021-04-06", 0], ["2021-04-07", 0], ["2021-04-08", 0], ["2021-04-09", 0], ["2021-04-10", 0], ["2021-04-11", 0], ["2021-04-12", 0], ["2021-04-13", 0], ["2021-04-14", 0], ["2021-04-15", 0], ["2021-04-16", 0], ["2021-04-17", 0], ["2021-04-18", 0], ["2021-04-19", 0], ["2021-04-20", 0], ["2021-04-21", 0], ["2021-04-22", 0], ["2021-04-23", 0], ["2021-04-24", 0], ["2021-04-25", 0], ["2021-04-26", 0], ["2021-04-27", 0], ["2021-04-28", 0], ["2021-04-29", 0], ["2021-04-30", 0], ["2021-05-01", 0], ["2021-05-02", 0], ["2021-05-03", 0], ["2021-05-04", 0], ["2021-05-05", 0], ["2021-05-06", 0], ["2021-05-07", 0], ["2021-05-08", 0], ["2021-05-09", 0], ["2021-05-10", 0], ["2021-05-11", 0], ["2021-05-12", 0], ["2021-05-13", 0], ["2021-05-14", 0], ["2021-05-15", 0], ["2021-05-16", 0], ["2021-05-17", 0], ["2021-05-18", 0], ["2021-05-19", 0], ["2021-05-20", 0], ["2021-05-21", 0], ["2021-05-22", 0], ["2021-05-23", 0], ["2021-05-24", 0], ["2021-05-25", 0], ["2021-05-26", 0], ["2021-05-27", 0], ["2021-05-28", 0], ["2021-05-29", 0], ["2021-05-30", 0], ["2021-05-31", 0], ["2021-06-01", 0], ["2021-06-02", 0], ["2021-06-03", 0], ["2021-06-04", 0], ["2021-06-05", 0], ["2021-06-06", 0], ["2021-06-07", 0], ["2021-06-08", 0], ["2021-06-09", 0], ["2021-06-10", 0], ["2021-06-11", 0], ["2021-06-12", 0], ["2021-06-13", 0], ["2021-06-14", 0], ["2021-06-15", 0], ["2021-06-16", 0], ["2021-06-17", 0], ["2021-06-18", 0], ["2021-06-19", 0], ["2021-06-20", 0], ["2021-06-21", 0], ["2021-06-22", 0], ["2021-06-23", 0], ["2021-06-24", 0], ["2021-06-25", 0], ["2021-06-26", 0], ["2021-06-27", 0], ["2021-06-28", 0], ["2021-06-29", 0], ["2021-06-30", 0], ["2021-07-01", 0], ["2021-07-02", 0], ["2021-07-03", 0], ["2021-07-04", 0], ["2021-07-05", 0], ["2021-07-06", 0], ["2021-07-07", 0], ["2021-07-08", 0], ["2021-07-09", 0], ["2021-07-10", 0], ["2021-07-11", 0], ["2021-07-12", 0], ["2021-07-13", 0], ["2021-07-14", 0], ["2021-07-15", 0], ["2021-07-16", 0], ["2021-07-17", 0], ["2021-07-18", 0], ["2021-07-19", 0], ["2021-07-20", 0], ["2021-07-21", 0], ["2021-07-22", 0], ["2021-07-23", 0], ["2021-07-24", 0], ["2021-07-25", 0], ["2021-07-26", 0], ["2021-07-27", 0], ["2021-07-28", 0], ["2021-07-29", 0], ["2021-07-30", 0], ["2021-07-31", 0], ["2021-08-01", 0], ["2021-08-02", 0], ["2021-08-03", 0], ["2021-08-04", 0], ["2021-08-05", 0], ["2021-08-06", 0], ["2021-08-07", 0], ["2021-08-08", 0], ["2021-08-09", 0], ["2021-08-10", 0], ["2021-08-11", 0], ["2021-08-12", 0], ["2021-08-13", 0], ["2021-08-14", 0], ["2021-08-15", 0], ["2021-08-16", 0], ["2021-08-17", 0], ["2021-08-18", 0], ["2021-08-19", 0], ["2021-08-20", 0], ["2021-08-21", 0], ["2021-08-22", 0], ["2021-08-23", 0], ["2021-08-24", 0], ["2021-08-25", 0], ["2021-08-26", 0], ["2021-08-27", 0], ["2021-08-28", 0], ["2021-08-29", 0], ["2021-08-30", 0], ["2021-08-31", 0], ["2021-09-01", 0], ["2021-09-02", 0], ["2021-09-03", 0], ["2021-09-04", 0], ["2021-09-05", 0], ["2021-09-06", 2], ["2021-09-07", 0], ["2021-09-08", 0], ["2021-09-09", 0], ["2021-09-10", 0], ["2021-09-11", 0], ["2021-09-12", 1], ["2021-09-13", 0], ["2021-09-14", 0], ["2021-09-15", 0], ["2021-09-16", 1], ["2021-09-17", 0], ["2021-09-18", 0], ["2021-09-19", 0], ["2021-09-20", 0], ["2021-09-21", 0], ["2021-09-22", 0], ["2021-09-23", 1], ["2021-09-24", 0], ["2021-09-25", 0], ["2021-09-26", 0], ["2021-09-27", 0], ["2021-09-28", 0], ["2021-09-29", 0], ["2021-09-30", 0], ["2021-10-01", 0], ["2021-10-02", 0], ["2021-10-03", 0], ["2021-10-04", 0], ["2021-10-05", 0], ["2021-10-06", 0], ["2021-10-07", 1], ["2021-10-08", 0], ["2021-10-09", 0], ["2021-10-10", 0], ["2021-10-11", 0], ["2021-10-12", 0], ["2021-10-13", 0], ["2021-10-14", 0], ["2021-10-15", 0], ["2021-10-16", 0], ["2021-10-17", 0], ["2021-10-18", 0], ["2021-10-19", 0], ["2021-10-20", 0], ["2021-10-21", 0], ["2021-10-22", 0], ["2021-10-23", 0], ["2021-10-24", 0], ["2021-10-25", 0], ["2021-10-26", 0], ["2021-10-27", 0], ["2021-10-28", 0], ["2021-10-29", 0], ["2021-10-30", 1]]
-        }]
-
-    };
-
-    myChart.setOption(option);
-</script>
-              
             </div>
           </div>
         </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent">
+        </div>
+        <!-- 评分 -->
+        <div class="single-reward">
+          
+          <!-- 五星评分 -->
+<div id="wpac-rating"></div>
+<script type="text/javascript">
+wpac_init = window.wpac_init || [];
+wpac_init.push({widget: 'Rating', id: 23889});
+(function() {
+    if ('WIDGETPACK_LOADED' in window) return;
+    WIDGETPACK_LOADED = true;
+    var mc = document.createElement('script');
+    mc.type = 'text/javascript';
+    mc.async = true;
+    mc.src = 'https://embed.widgetpack.com/widget.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+})();
+</script>
+<!-- <a target="_blank" rel="noopener" href="https://widgetpack.com" class="wpac-cr">Star Rating WIDGET PACK</a> -->
+          
+        </div>
+        <!-- 自定义署名方式 -->
+        <footer class="post-footer">
+          <div class="post-lincenses" style="color: #ff9966;">
+            欢迎转载，转载时请注明来源哦！
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" style="color: #ff9966;" target="_blank"
+              rel="nofollow">
+              <i class="fa fa-creative-commons" aria-hidden="true"></i>ncsa4.0</a>
+          </div>
+          
+          <div class="post-tags" style="color: #a39391">
+            <span><i class="fa fa-tags"></i>
+              
+            </span>
+            <span>
+              <i class="iconfont icon-file"></i>
+              
+            </span>
+          </div>
+          
+          <div class="post-share" >
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+        <!-- <div class="tag-cloud">
+          <div class="tag-cloud-title">
+          </div>
+          <div class="tag-cloud-tags">
+            
+          </div>
+        </div> -->
       </article>
-    </div>
-  </div>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+          
+            <div class="post-nepre full next">
+              
+              <a href="/2021/10/07/PPLCNet/" rel="next">
+                <div class="background">
+                  <img class="lazyload" src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/img/loader/orange.progress-bar-stripe-loader.svg" data-src=""
+                    style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"
+                    onerror="imgError(this,3)" src="">
+                </div>
+                <span class="label">Next Post</span>
+                <div class="info">
+                  <h3>PPLCNet</h3>
+                  <hr>
+                </div>
+              </a>
+            </div>
+            
+      </section>
+      <!-- 加密文章隐藏评论 -->
+      <section class="comment" >
+        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<div id="gitalk-container" class="comment"></div> 
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="/js/md5.min.js"></script>
+<script type="text/javascript">
+	var gitalk = new Gitalk({
+  	clientID: '',
+  	clientSecret: '',
+  	repo: 'cungudafa.github.io',
+  	owner: 'Mr-ind1fferent',
+	admin: ['Mr-ind1fferent'],
+	distractionFreeMode: 'true',
+    id: md5(location.pathname)
+})
+gitalk.render('gitalk-container') 
+</script>
+
+      </section>
+      <!-- 加密文章隐藏作者信息 -->
+      
+    </main><!-- #main -->
+  </div><!-- #primary -->
 </div>
+
+
+<!--评论配置-->
+
+
+
       <!-- body.end -->
     </div>
     <!-- search -->    
