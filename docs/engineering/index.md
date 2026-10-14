@@ -53,17 +53,7 @@ HDF5→LeRobot 脚本位置：
 ```txt
 /home/agilex/pika_ros/src/data_tools/scripts/hdf5_to_lerobot.py
 ```
-实测：
-- `aloha` 环境：`ModuleNotFoundError: No module named 'lerobot'`。
-- `pika` 环境：`ModuleNotFoundError: No module named 'h5py'`。
-- `vt` 环境：`ModuleNotFoundError: No module named 'h5py'`。
-- 三个环境都不能正常显示该脚本的 `--help`。
-即使补齐依赖，脚本仍不能直接转换本轮 HDF5：
-- 只搜索 `**/data.hdf5`，本轮及供应商 ALOHA 样例命名为 `episode_0.hdf5`。
-- 期望 `arm/jointStatePosition/...`、`arm/endPose/...` 和外部图片路径。
-- 实际采集文件使用 `/observations/qpos`、`/action` 和 HDF5 内嵌图像。
-- 深度转换代码被注释。
-- 默认输入目录和输出目录都为 `/home/agilex/data`，转换前会递归删除输出目录，默认参数存在删除原始数据的严重风险。
+
 因此本轮没有运行转换主体，避免破坏原始数据。
 全机检索没有发现 MCAP→ARIO 转换程序、MCAP 输入样例或 ARIO 输出样例。
 
