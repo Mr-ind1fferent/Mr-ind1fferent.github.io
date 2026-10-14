@@ -53,7 +53,3 @@ HDF5→LeRobot 脚本位置：
 ```txt
 /home/agilex/pika_ros/src/data_tools/scripts/hdf5_to_lerobot.py
 ```
-
-因此本轮没有运行转换主体，避免破坏原始数据。
-全机检索没有发现 MCAP→ARIO 转换程序、MCAP 输入样例或 ARIO 输出样例。
-
