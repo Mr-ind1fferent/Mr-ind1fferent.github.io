@@ -48,8 +48,26 @@ ip：192.168.1.196
 
 
 
-# 4.8 数据转换
+# 数据转换
 HDF5→LeRobot 脚本位置：
 ```txt
 /home/agilex/pika_ros/src/data_tools/scripts/hdf5_to_lerobot.py
 ```
+
+# 真机部署pi_0.5模型
+## 服务器端
+
+## 工控机端
+需要提前安装openpi的client端依赖包
+
+```bash
+conda activate client
+cd ~/openpi/packages/openpi-client/
+
+python -u ros1_pi05.py   --host 10.242.10.215   --port 8000   --prompt "Place the black mesh pen holder and the roll of tape into the cardboard box."   --image-size 224   --execute   --control-hz 30   --action-horizon 25   --max-joint-step 0.02   --max-gripper-step 0.005   --max-tracking-error 0.35   --observation-timeout 30   --inference-timeout 60   --max-steps 700
+```
+
+
+将机械臂恢复到**起始位置**：
+```bash
+python ros1_pi05_return.py --from-run ~/pi05_deploy_check/20261014_204137 --duration 8
